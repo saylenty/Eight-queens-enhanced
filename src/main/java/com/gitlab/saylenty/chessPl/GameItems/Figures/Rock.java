@@ -3,9 +3,14 @@ package com.gitlab.saylenty.chessPl.GameItems.Figures;
 import com.gitlab.saylenty.chessPl.Infrustucture.Point;
 
 import java.awt.*;
-import java.util.SortedSet;
+import java.util.Set;
 
-
+/**
+ * <p>
+ * Created by Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ * </p>
+ */
 public class Rock extends Figure {
     public Rock(Color color, Point position) {
         this("Rock", color, position);
@@ -20,45 +25,17 @@ public class Rock extends Figure {
     }
 
     @Override
-    public SortedSet<Point> getRange() {
+    public Set<Point> getRange() {
         if (!range.isEmpty()) {
             return range;
         }
         range.add(this.position); // add current position as initial
-        int x = this.position.getX();
-        int y = this.position.getY();
 
-        // look upwards
-        int i = 1;
-        while (y - i >= 0) {
-            Point p = pool.valueOf(x, y - i);
-            range.add(p);
-            i++;
-        }
+        up();
+        down();
+        left();
+        right();
 
-        // look downwards
-        i = 1;
-        while (y + i < this.chessBoard.getHeight()) {
-            Point p = pool.valueOf(x, y + i);
-            range.add(p);
-            i++;
-        }
-
-        // look leftwards
-        i = 1;
-        while (x - i >= 0) {
-            Point p = pool.valueOf(x - i, y);
-            range.add(p);
-            i++;
-        }
-
-        // look rightwards
-        i = 1;
-        while (x + i < this.chessBoard.getWidth()) {
-            Point p = pool.valueOf(x + i, y);
-            range.add(p);
-            i++;
-        }
         return range;
     }
 }

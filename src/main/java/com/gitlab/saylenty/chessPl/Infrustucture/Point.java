@@ -1,6 +1,11 @@
 package com.gitlab.saylenty.chessPl.Infrustucture;
 
-
+/**
+ * <p>
+ * Created by Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ * </p>
+ */
 public class Point implements Comparable<Point> {
     private int x;
     private int y;

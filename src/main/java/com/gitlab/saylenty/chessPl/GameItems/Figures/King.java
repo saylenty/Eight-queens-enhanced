@@ -3,9 +3,14 @@ package com.gitlab.saylenty.chessPl.GameItems.Figures;
 import com.gitlab.saylenty.chessPl.Infrustucture.Point;
 
 import java.awt.*;
-import java.util.SortedSet;
+import java.util.Set;
 
-
+/**
+ * <p>
+ * Created by Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ * </p>
+ */
 public class King extends Figure {
 
     public King(Color color, Point position) {
@@ -21,51 +26,21 @@ public class King extends Figure {
     }
 
     @Override
-    public SortedSet<Point> getRange() {
+    public Set<Point> getRange() {
         if (!range.isEmpty()) {
             return range;
         }
 
         range.add(this.getPosition()); // add current position as initial
-        int x = this.position.getX();
-        int y = this.position.getY();
 
-        // left
-        if (x - 1 >= 0) {
-            range.add(pool.valueOf(x - 1, y));
-        }
-        // up
-        if (y - 1 >= 0) {
-            range.add(pool.valueOf(x, y - 1));
-        }
-
-        // left and up (diagonal)
-        if (x - 1 >= 0 && y - 1 >= 0) {
-            range.add(pool.valueOf(x - 1, y - 1));
-        }
-
-        // right
-        if (x + 1 < this.chessBoard.getWidth()) {
-            range.add(pool.valueOf(x + 1, y));
-        }
-        // right and up (diagonal)
-        if (x + 1 < this.chessBoard.getWidth() && y - 1 >= 0) {
-            range.add(pool.valueOf(x + 1, y - 1));
-        }
-
-        // down
-        if (y + 1 < this.chessBoard.getHeight()) {
-            range.add(pool.valueOf(x, y + 1));
-        }
-        // down and right (diagonal)
-        if (x + 1 < this.chessBoard.getWidth() && y + 1 < this.chessBoard.getHeight()) {
-            range.add(pool.valueOf(x + 1, y + 1));
-        }
-
-        //left and down (diagonal)
-        if (x - 1 >= 0 && y + 1 < this.chessBoard.getHeight()) {
-            range.add(pool.valueOf(x - 1, y + 1));
-        }
+        left(1);
+        right(1);
+        up(1);
+        down(1);
+        upLeftDiagonal(1);
+        downRightDiagonal(1);
+        upRightDiagonal(1);
+        downLeftDiagonal(1);
         return range;
     }
 }

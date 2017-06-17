@@ -5,6 +5,12 @@ import com.gitlab.saylenty.chessPl.GameItems.Figures.*;
 
 import java.awt.*;
 
+/**
+ * <p>
+ * Created by Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ * </p>
+ */
 public class FiguresFactory {
 
     public Bishop bishop(Color color, ChessBoard board){

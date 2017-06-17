@@ -12,6 +12,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * <p>
+ * Created by Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ * </p>
+ */
+
 public class Main {
 
     public static void main(String[] args) {
@@ -30,9 +37,9 @@ public class Main {
         figures.add(figuresFactory.knight(Color.black, chessBoard)); // one Knight
         figures.add(figuresFactory.bishop(Color.black, chessBoard)); // one Bishop
         figures.add(figuresFactory.king(Color.black, chessBoard)); // two Kings
-        figures.add(figuresFactory.king(Color.black, chessBoard)); // two Kings
+        figures.add(figuresFactory.king(Color.white, chessBoard)); // two Kings
 
-        // print the message of game start
+        // print the message about game start
         System.out.println(String.format("Game has been started at %s", new Date().toString()));
 
         // create timer

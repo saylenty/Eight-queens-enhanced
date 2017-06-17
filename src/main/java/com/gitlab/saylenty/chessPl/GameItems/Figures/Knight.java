@@ -3,9 +3,14 @@ package com.gitlab.saylenty.chessPl.GameItems.Figures;
 import com.gitlab.saylenty.chessPl.Infrustucture.Point;
 
 import java.awt.*;
-import java.util.SortedSet;
+import java.util.Set;
 
-
+/**
+ * <p>
+ * Created by Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ * </p>
+ */
 public class Knight extends Figure {
     public Knight(Color color, Point position) {
         this("Knight", color, position);
@@ -20,7 +25,7 @@ public class Knight extends Figure {
     }
 
     @Override
-    public SortedSet<Point> getRange() {
+    public Set<Point> getRange() {
         if (!range.isEmpty()) {
             return range;
         }

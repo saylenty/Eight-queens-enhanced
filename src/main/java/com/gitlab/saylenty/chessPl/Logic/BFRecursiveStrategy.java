@@ -8,7 +8,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-
+/**
+ * <p>
+ * Created by Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ * </p>
+ */
 public class BFRecursiveStrategy implements PlacementStrategy {
 
     private final ChessBoard board;

@@ -6,11 +6,14 @@ import com.gitlab.saylenty.chessPl.Infrustucture.PointsPool;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-
+/**
+ * <p>
+ * Created by Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ * </p>
+ */
 public class ChessBoard {
     private int height;
     private int width;
@@ -51,7 +54,7 @@ public class ChessBoard {
     }
 
     public Set<Point> getFreePoints() {
-        SortedSet<Point> difference = new TreeSet<>(this.getAllBoardPoints());
+        Set<Point> difference = new HashSet<>(this.getAllBoardPoints());
         difference.removeAll(boardFigures.stream().flatMap(x -> x.getRange().stream()).collect(Collectors.toSet()));
         return difference;
     }
