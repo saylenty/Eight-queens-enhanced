@@ -1,12 +1,13 @@
+/**
+ * Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ */
 package com.gitlab.saylenty.chessPl.Infrustucture;
 
 import java.util.HashMap;
 
 /**
- * <p>
- * Created by Saylenty on 11-Apr-17.
- * Copyright (c) 2017
- * </p>
+ * Special class that holds all points instances which were used during the game (for optimization)
  */
 public class PointsPool {
     private static PointsPool ourInstance = new PointsPool();
@@ -21,6 +22,12 @@ public class PointsPool {
         points = new HashMap<>();
     }
 
+    /**
+     * Get a point from the pool or create a new one
+     * @param x horizontal coordinate
+     * @param y vertical coordinate
+     * @return a requested point
+     */
     public Point valueOf(int x, int y){
         int hash = 31 * x + y;
         if (points.containsKey(hash)) {

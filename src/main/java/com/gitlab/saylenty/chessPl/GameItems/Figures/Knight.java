@@ -1,3 +1,7 @@
+/**
+ * Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ */
 package com.gitlab.saylenty.chessPl.GameItems.Figures;
 
 import com.gitlab.saylenty.chessPl.Infrustucture.Point;
@@ -5,12 +9,6 @@ import com.gitlab.saylenty.chessPl.Infrustucture.Point;
 import java.awt.*;
 import java.util.Set;
 
-/**
- * <p>
- * Created by Saylenty on 11-Apr-17.
- * Copyright (c) 2017
- * </p>
- */
 public class Knight extends Figure {
     public Knight(Color color, Point position) {
         this("Knight", color, position);
@@ -35,34 +33,34 @@ public class Knight extends Figure {
 
         // up
         if (y - 2 >= 0 && x - 1 >= 0) {
-            range.add(pool.valueOf(x - 1, y - 2));
+            range.add(getPool().valueOf(x - 1, y - 2));
         }
         if (y - 2 >= 0 && x + 1 >= 0) {
-            range.add(pool.valueOf(x + 1, y - 2));
+            range.add(getPool().valueOf(x + 1, y - 2));
         }
 
         // left
         if (x - 2 >= 0 && y - 1 >= 0) {
-            range.add(pool.valueOf(x - 2, y - 1));
+            range.add(getPool().valueOf(x - 2, y - 1));
         }
         if (x - 2 >= 0 && y + 1 < this.chessBoard.getHeight()) {
-            range.add(pool.valueOf(x - 2, y + 1));
+            range.add(getPool().valueOf(x - 2, y + 1));
         }
 
         // bottom
         if (x - 1 >= 0 && y + 2 < this.chessBoard.getHeight()) {
-            range.add(pool.valueOf(x - 1, y + 2));
+            range.add(getPool().valueOf(x - 1, y + 2));
         }
         if (x + 1 < this.chessBoard.getWidth() && y + 2 < this.chessBoard.getHeight()) {
-            range.add(pool.valueOf(x + 1, y + 2));
+            range.add(getPool().valueOf(x + 1, y + 2));
         }
 
         // right
         if (x + 2 < this.chessBoard.getWidth() && y + 1 < this.chessBoard.getHeight()) {
-            range.add(pool.valueOf(x + 2, y + 1));
+            range.add(getPool().valueOf(x + 2, y + 1));
         }
         if (x + 2 < this.chessBoard.getWidth() && y - 1 >= 0) {
-            range.add(pool.valueOf(x + 2, y - 1));
+            range.add(getPool().valueOf(x + 2, y - 1));
         }
         return range;
     }

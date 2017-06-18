@@ -1,3 +1,7 @@
+/**
+ * Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ */
 package com.gitlab.saylenty.chessPl.GameItems.Figures;
 
 import com.gitlab.saylenty.chessPl.Infrustucture.Point;
@@ -5,12 +9,6 @@ import com.gitlab.saylenty.chessPl.Infrustucture.Point;
 import java.awt.*;
 import java.util.Set;
 
-/**
- * <p>
- * Created by Saylenty on 11-Apr-17.
- * Copyright (c) 2017
- * </p>
- */
 public class King extends Figure {
 
     public King(Color color, Point position) {

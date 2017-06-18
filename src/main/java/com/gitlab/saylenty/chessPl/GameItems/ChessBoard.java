@@ -1,3 +1,9 @@
+/**
+ * <p>
+ * Created by Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ * </p>
+ */
 package com.gitlab.saylenty.chessPl.GameItems;
 
 import com.gitlab.saylenty.chessPl.GameItems.Figures.Figure;
@@ -8,12 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * <p>
- * Created by Saylenty on 11-Apr-17.
- * Copyright (c) 2017
- * </p>
- */
 public class ChessBoard {
     private int height;
     private int width;
@@ -59,10 +59,20 @@ public class ChessBoard {
         return difference;
     }
 
+    /**
+     * Associates the board with figure
+     * @param figure a figure to associates with
+     * @return whether association were successful
+     */
     public boolean addFigure(Figure figure) {
         return boardFigures.add(figure);
     }
 
+    /**
+     * removes figure from the board
+     * @param figure a figure for removing
+     * @return whether removing were successful
+     */
     public boolean removeFigure(Figure figure) {
         return boardFigures.remove(figure);
     }

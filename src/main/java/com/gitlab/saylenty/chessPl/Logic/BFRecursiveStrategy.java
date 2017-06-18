@@ -1,3 +1,7 @@
+/**
+ * Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ */
 package com.gitlab.saylenty.chessPl.Logic;
 
 import com.gitlab.saylenty.chessPl.GameItems.ChessBoard;
@@ -9,10 +13,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * <p>
- * Created by Saylenty on 11-Apr-17.
- * Copyright (c) 2017
- * </p>
+ * Recursive chess figures placement strategy for the chess game
+ * Counts the number of available figures permutations when they can't capture each other
  */
 public class BFRecursiveStrategy implements PlacementStrategy {
 

@@ -1,10 +1,11 @@
+/**
+ * Saylenty on 11-Apr-17.
+ * Copyright (c) 2017
+ */
 package com.gitlab.saylenty.chessPl.Infrustucture;
 
 /**
- * <p>
- * Created by Saylenty on 11-Apr-17.
- * Copyright (c) 2017
- * </p>
+ * Point class for the ChessGame
  */
 public class Point implements Comparable<Point> {
     private int x;
