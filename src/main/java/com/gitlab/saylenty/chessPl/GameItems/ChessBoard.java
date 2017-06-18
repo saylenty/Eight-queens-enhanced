@@ -65,7 +65,11 @@ public class ChessBoard {
      * @return whether association were successful
      */
     public boolean addFigure(Figure figure) {
-        return boardFigures.add(figure);
+        boolean res = boardFigures.add(figure);
+        if (res){
+            figure.setBoard(this);
+        }
+        return res;
     }
 
     /**

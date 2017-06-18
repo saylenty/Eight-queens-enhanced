@@ -28,7 +28,7 @@ public abstract class Figure {
     Point position;
 
     /**
-     * A ches board the figure is associated with
+     * A chess board the figure is associated with
      */
     ChessBoard chessBoard;
 
@@ -62,7 +62,6 @@ public abstract class Figure {
 
     /**
      * Apply new color for a figure
-     *
      * @param color new color of the figure
      */
     public void setColor(Color color) {
@@ -78,7 +77,6 @@ public abstract class Figure {
 
     /**
      * Apply new name for the figure
-     *
      * @param name new figure name
      */
     public void setName(String name) {
@@ -87,7 +85,6 @@ public abstract class Figure {
 
     /**
      * Associates the figure with the chess board
-     *
      * @param chessBoard a board associate the figure with
      */
     public void setBoard(ChessBoard chessBoard) {
@@ -95,7 +92,11 @@ public abstract class Figure {
     }
 
     public boolean removeFromBoard(ChessBoard chessBoard) {
-        return this.chessBoard.removeFigure(this);
+        boolean res = this.chessBoard.removeFigure(this);
+        if (res){
+            this.chessBoard = null;
+        }
+        return res;
     }
 
     /**
@@ -107,7 +108,6 @@ public abstract class Figure {
 
     /**
      * Move the figure to new position
-     *
      * @param position a new figure position
      */
     public void setPosition(Point position) {
@@ -119,7 +119,6 @@ public abstract class Figure {
 
     /**
      * Moves a figure to an other free position
-     *
      * @return indicates weather the moving was successful
      */
     public boolean move() {
