@@ -10,6 +10,11 @@ import java.awt.*;
 import java.util.Set;
 
 public class Rock extends Figure {
+
+    public Rock() {
+        this(null, new Point(0, 0));
+    }
+
     public Rock(Color color, Point position) {
         this("Rock", color, position);
     }

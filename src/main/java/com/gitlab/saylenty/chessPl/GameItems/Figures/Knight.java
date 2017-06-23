@@ -10,6 +10,11 @@ import java.awt.*;
 import java.util.Set;
 
 public class Knight extends Figure {
+
+    public Knight() {
+        this(null, new Point(0, 0));
+    }
+
     public Knight(Color color, Point position) {
         this("Knight", color, position);
     }

@@ -10,6 +10,11 @@ import java.awt.*;
 import java.util.Set;
 
 public class Queen extends Figure {
+
+    public Queen() {
+        this(null, new Point(0, 0));
+    }
+
     public Queen(Color color, Point position) {
         this("Queen", color, position);
     }

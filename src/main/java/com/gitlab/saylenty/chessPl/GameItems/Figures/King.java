@@ -11,6 +11,10 @@ import java.util.Set;
 
 public class King extends Figure {
 
+    public King() {
+        this(null, new Point(0, 0));
+    }
+
     public King(Color color, Point position) {
         this("King", color, position);
     }

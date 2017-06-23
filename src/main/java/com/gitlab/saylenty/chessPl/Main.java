@@ -5,7 +5,7 @@
 package com.gitlab.saylenty.chessPl;
 
 import com.gitlab.saylenty.chessPl.GameItems.ChessBoard;
-import com.gitlab.saylenty.chessPl.GameItems.Figures.Figure;
+import com.gitlab.saylenty.chessPl.GameItems.Figures.*;
 import com.gitlab.saylenty.chessPl.Infrustucture.FiguresFactory;
 import com.gitlab.saylenty.chessPl.Logic.BFRecursiveStrategy;
 import com.gitlab.saylenty.chessPl.Logic.ChessGame;
@@ -29,12 +29,12 @@ public class Main {
         ArrayList<Figure> figures = new ArrayList<>(6);
 
         FiguresFactory figuresFactory = new FiguresFactory();
-        figures.add(figuresFactory.queen(Color.black, chessBoard)); // one Queen
-        figures.add(figuresFactory.rock(Color.black, chessBoard)); // one Rock
-        figures.add(figuresFactory.knight(Color.black, chessBoard)); // one Knight
-        figures.add(figuresFactory.bishop(Color.black, chessBoard)); // one Bishop
-        figures.add(figuresFactory.king(Color.black, chessBoard)); // one King
-        figures.add(figuresFactory.king(Color.white, chessBoard)); // second King
+        figures.add(figuresFactory.createFigure(Queen.class, Color.black, chessBoard)); // one Queen
+        figures.add(figuresFactory.createFigure(Rock.class, Color.black, chessBoard)); // one Rock
+        figures.add(figuresFactory.createFigure(Knight.class, Color.black, chessBoard)); // one Knight
+        figures.add(figuresFactory.createFigure(Bishop.class, Color.black, chessBoard)); // one Bishop
+        figures.add(figuresFactory.createFigure(King.class, Color.black, chessBoard)); // one King
+        figures.add(figuresFactory.createFigure(King.class, Color.white, chessBoard)); // second King
 
         // print the message about game start
         System.out.println(String.format("Game has been started at %s", new Date().toString()));

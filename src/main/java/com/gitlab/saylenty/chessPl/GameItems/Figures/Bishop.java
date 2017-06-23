@@ -11,6 +11,10 @@ import java.util.Set;
 
 public class Bishop extends Figure {
 
+    public Bishop() {
+        this(null, new Point(0, 0));
+    }
+
     public Bishop(Color color) {
         this(color, new Point(0, 0));
     }
