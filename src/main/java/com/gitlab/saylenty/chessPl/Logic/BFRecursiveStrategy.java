@@ -21,7 +21,7 @@ public class BFRecursiveStrategy implements PlacementStrategy {
     private final ChessBoard board;
     private final List<Figure> figures;
     private HashMap<Figure, Point> result;
-    private int i = 0;
+    private int solutionsNumber = 0;
 
     public BFRecursiveStrategy(ChessBoard board, List<Figure> figures) {
         this.board = board;
@@ -31,8 +31,30 @@ public class BFRecursiveStrategy implements PlacementStrategy {
 
     @Override
     public int play() {
-        recursiveStrategy(0);
-        return i;
+        // run solver thread in a separate thread in order to save save some time
+        Thread solverThread = new Thread(() -> recursiveStrategy(0));
+        solverThread.start();
+        // we need calculate the number of figures that are of the same class (e.g. King, Queen, etc.) and color
+        // if these "same" figures is swapped -> the number of solutions shouldn't be changed
+        // NOTE: this should be rewritten in a way with an additional figure class specific point pool to increase performance
+        // use memory efficient variant here because the solution calc time usually takes some time and memory
+        int c = 1;
+        for (int i = 0; i < figures.size() - 1; i++) {
+            for (int j = i + 1; j < figures.size(); j++) {
+                Figure f1 = figures.get(i);
+                Figure f2 = figures.get(j);
+                if (f1.getClass().equals(f2.getClass()) && f1.getColor().equals(f2.getColor())) {
+                    c++;
+                }
+            }
+        }
+        try {
+            solverThread.join();
+        } catch (InterruptedException e) {
+            // error occurred
+            return -1;
+        }
+        return solutionsNumber / c;
     }
 
     private boolean recursiveStrategy(int start) {
@@ -43,7 +65,7 @@ public class BFRecursiveStrategy implements PlacementStrategy {
                 System.out.println(entry.getKey());
             }
             System.out.println("<---------------------------------");*/
-            i++;
+            ++solutionsNumber;
             return false;
         }
 
