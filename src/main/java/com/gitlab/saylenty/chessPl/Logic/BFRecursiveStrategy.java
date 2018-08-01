@@ -40,8 +40,8 @@ public class BFRecursiveStrategy implements PlacementStrategy {
         // use memory efficient variant here because the solution calc time usually takes some time and memory
         int c = 1;
         for (int i = 0; i < figures.size() - 1; i++) {
+            Figure f1 = figures.get(i);
             for (int j = i + 1; j < figures.size(); j++) {
-                Figure f1 = figures.get(i);
                 Figure f2 = figures.get(j);
                 if (f1.getClass().equals(f2.getClass()) && f1.getColor().equals(f2.getColor())) {
                     c++;
@@ -80,7 +80,7 @@ public class BFRecursiveStrategy implements PlacementStrategy {
                 if (recursiveStrategy(start + 1)) { // continue with another figure
                     return true;
                 } else {
-                    // if another figure can't find it place on a board -> step back and move previous figure
+                    // if another figure can't find its place on a board -> step back and move previous figure
                     board.removeFigure(current);
                     result.remove(current);
                 }
