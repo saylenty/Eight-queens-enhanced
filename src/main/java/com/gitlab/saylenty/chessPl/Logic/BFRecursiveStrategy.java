@@ -8,6 +8,7 @@ import com.gitlab.saylenty.chessPl.GameItems.ChessBoard;
 import com.gitlab.saylenty.chessPl.GameItems.Figures.Figure;
 import com.gitlab.saylenty.chessPl.Infrustucture.Point;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,11 +27,12 @@ public class BFRecursiveStrategy implements PlacementStrategy {
     public BFRecursiveStrategy(ChessBoard board, List<Figure> figures) {
         this.board = board;
         this.figures = figures;
-        this.result = new LinkedHashMap<>();
     }
 
     @Override
     public int play() {
+        // init resulting HashMap
+        this.result = new LinkedHashMap<>();
         // run solver thread in a separate thread in order to save save some time
         Thread solverThread = new Thread(() -> recursiveStrategy(0));
         solverThread.start();
@@ -40,10 +42,14 @@ public class BFRecursiveStrategy implements PlacementStrategy {
         // use memory efficient variant here because the solution calc time usually takes some time and memory
         int c = 1;
         for (int i = 0; i < figures.size() - 1; i++) {
-            Figure f1 = figures.get(i);
+            Figure figure1 = figures.get(i);
+            Class<? extends Figure> f1Class = figure1.getClass();
+            Color f1Color = figure1.getColor();
             for (int j = i + 1; j < figures.size(); j++) {
-                Figure f2 = figures.get(j);
-                if (f1.getClass().equals(f2.getClass()) && f1.getColor().equals(f2.getColor())) {
+                Figure figure2 = figures.get(j);
+                Class<? extends Figure> figure2Class = figure2.getClass();
+                Color figure2Color = figure2.getColor();
+                if (f1Class.equals(figure2Class) && f1Color.equals(figure2Color)) {
                     c++;
                 }
             }

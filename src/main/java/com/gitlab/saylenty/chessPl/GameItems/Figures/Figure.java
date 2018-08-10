@@ -6,7 +6,6 @@ package com.gitlab.saylenty.chessPl.GameItems.Figures;
 
 import com.gitlab.saylenty.chessPl.GameItems.ChessBoard;
 import com.gitlab.saylenty.chessPl.Infrustucture.Point;
-import com.gitlab.saylenty.chessPl.Infrustucture.PointsPool;
 import com.gitlab.saylenty.chessPl.Infrustucture.utils.ColorPrinter;
 
 import java.awt.*;
@@ -20,7 +19,6 @@ public abstract class Figure {
     private Color color;
     private ColorPrinter colorPrinter;
     private Iterator<Point> iterator;
-    private PointsPool pool;
 
     /**
      * Current figure position
@@ -37,19 +35,11 @@ public abstract class Figure {
      */
     Set<Point> range;
 
-    /**
-     * A pool for points
-     */
-    public PointsPool getPool() {
-        return pool;
-    }
-
     Figure(String name, Color color, Point position) {
         this.name = name;
         this.color = color;
         this.position = position;
         range = new HashSet<>();
-        pool = PointsPool.getInstance();
         colorPrinter = new ColorPrinter();
     }
 
@@ -161,7 +151,7 @@ public abstract class Figure {
         int x = position.getX();
         int i = 1;
         while (y - i >= 0 && limit != 0) {
-            Point p = pool.valueOf(x, y - i++);
+            Point p = new Point(x, y - i++);
             range.add(p);
             limit--;
         }
@@ -184,7 +174,7 @@ public abstract class Figure {
         int x = position.getX();
         int i = 1;
         while (y + i < this.chessBoard.getHeight() && limit != 0) {
-            Point p = pool.valueOf(x, y + i++);
+            Point p = new Point(x, y + i++);
             range.add(p);
             limit--;
         }
@@ -207,7 +197,7 @@ public abstract class Figure {
         int x = position.getX();
         int i = 1;
         while (x - i >= 0 && limit != 0) {
-            Point p = pool.valueOf(x - i++, y);
+            Point p = new Point(x - i++, y);
             range.add(p);
             limit--;
         }
@@ -228,9 +218,10 @@ public abstract class Figure {
     final void right(int limit) {
         int y = position.getY();
         int x = position.getX();
+        int chessBoardWidth = this.chessBoard.getWidth();
         int i = 1;
-        while (x + i < this.chessBoard.getWidth() && limit != 0) {
-            Point p = pool.valueOf(x + i++, y);
+        while (x + i < chessBoardWidth && limit != 0) {
+            Point p = new Point(x + i++, y);
             range.add(p);
             limit--;
         }
@@ -254,7 +245,7 @@ public abstract class Figure {
         // diagonal left upwards
         int i = 1;
         while (x - i >= 0 && y - i >= 0 && limit != 0) {
-            Point p = pool.valueOf(x - i, y - i);
+            Point p = new Point(x - i, y - i);
             range.add(p);
             i++;
             limit--;
@@ -276,10 +267,11 @@ public abstract class Figure {
     final void upRightDiagonal(int limit) {
         int y = position.getY();
         int x = position.getX();
+        int chessBoardWidth = this.chessBoard.getWidth();
         // diagonal right upwards
         int i = 1;
-        while (x + i < this.chessBoard.getWidth() && y - i >= 0 && limit != 0) {
-            Point p = pool.valueOf(x + i, y - i);
+        while (x + i < chessBoardWidth && y - i >= 0 && limit != 0) {
+            Point p = new Point(x + i, y - i);
             range.add(p);
             i++;
             limit--;
@@ -301,10 +293,11 @@ public abstract class Figure {
     final void downLeftDiagonal(int limit) {
         int y = position.getY();
         int x = position.getX();
+        int chessBoardHeight = this.chessBoard.getHeight();
         // diagonal left downwards
         int i = 1;
-        while (x - i >= 0 && y + i < this.chessBoard.getHeight() && limit != 0) {
-            Point p = pool.valueOf(x - i, y + i);
+        while (x - i >= 0 && y + i < chessBoardHeight && limit != 0) {
+            Point p = new Point(x - i, y + i);
             range.add(p);
             i++;
             limit--;
@@ -326,10 +319,12 @@ public abstract class Figure {
     final void downRightDiagonal(int limit) {
         int y = position.getY();
         int x = position.getX();
+        int chessBoardWidth = this.chessBoard.getWidth();
+        int chessBoardHeight = this.chessBoard.getHeight();
         // diagonal right downwards
         int i = 1;
-        while (x + i < this.chessBoard.getWidth() && y + i < this.chessBoard.getHeight() && limit != 0) {
-            Point p = pool.valueOf(x + i, y + i);
+        while (x + i < chessBoardWidth && y + i < chessBoardHeight && limit != 0) {
+            Point p = new Point(x + i, y + i);
             range.add(p);
             i++;
             limit--;

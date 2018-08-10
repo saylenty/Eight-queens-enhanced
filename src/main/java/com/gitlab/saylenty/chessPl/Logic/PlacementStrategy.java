@@ -4,6 +4,7 @@
  */
 package com.gitlab.saylenty.chessPl.Logic;
 
+@FunctionalInterface
 public interface PlacementStrategy {
 
     /**

@@ -7,9 +7,9 @@ package com.gitlab.saylenty.chessPl.Infrustucture;
 /**
  * Point class for the ChessGame
  */
-public class Point implements Comparable<Point> {
-    private int x;
-    private int y;
+public final class Point implements Comparable<Point> {
+    private final int x;
+    private final int y;
 
     public Point(int x, int y) {
         this.x = x;
@@ -20,16 +20,8 @@ public class Point implements Comparable<Point> {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public String toString() {
@@ -52,18 +44,7 @@ public class Point implements Comparable<Point> {
 
     @Override
     public int compareTo(Point o) {
-        if (x < o.getX()) {
-            return -1;
-        }
-        if (x > o.getX()) {
-            return 1;
-        }
-        if (x == o.getX() && y < o.getY()) {
-            return -1;
-        }
-        if (x == o.getX() && y > o.getY()) {
-            return 1;
-        }
-        return 0;
+        int cmp = Integer.compare(this.x, x);
+        return cmp == 0 ? Integer.compare(this.y, y) : cmp;
     }
 }

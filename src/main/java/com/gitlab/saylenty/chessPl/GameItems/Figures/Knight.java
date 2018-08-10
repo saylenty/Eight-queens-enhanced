@@ -32,41 +32,53 @@ public class Knight extends Figure {
         if (!range.isEmpty()) {
             return range;
         }
-        range.add(this.getPosition()); // add current position as initial
-        int x = this.getPosition().getX();
-        int y = this.getPosition().getY();
+        Point position = this.getPosition();
+        range.add(position); // add current position as initial
+        int x = position.getX();
+        int y = position.getY();
+        int chessBoardHeight = this.chessBoard.getHeight();
+        int chessBoardWidth = this.chessBoard.getWidth();
 
-        // up
+        up(x, y);
+        left(x, y, chessBoardHeight);
+        bottom(x, y, chessBoardHeight, chessBoardWidth);
+        right(x, y, chessBoardHeight, chessBoardWidth);
+        return range;
+    }
+
+    private void up(int x, int y) {
         if (y - 2 >= 0 && x - 1 >= 0) {
-            range.add(getPool().valueOf(x - 1, y - 2));
+            range.add(new Point(x - 1, y - 2));
         }
         if (y - 2 >= 0 && x + 1 >= 0) {
-            range.add(getPool().valueOf(x + 1, y - 2));
+            range.add(new Point(x + 1, y - 2));
         }
+    }
 
-        // left
+    private void bottom(int x, int y, int chessBoardHeight, int chessBoardWidth) {
+        if (x - 1 >= 0 && y + 2 < chessBoardHeight) {
+            range.add(new Point(x - 1, y + 2));
+        }
+        if (x + 1 < chessBoardWidth && y + 2 < chessBoardHeight) {
+            range.add(new Point(x + 1, y + 2));
+        }
+    }
+
+    private void left(int x, int y, int chessBoardHeight) {
         if (x - 2 >= 0 && y - 1 >= 0) {
-            range.add(getPool().valueOf(x - 2, y - 1));
+            range.add(new Point(x - 2, y - 1));
         }
-        if (x - 2 >= 0 && y + 1 < this.chessBoard.getHeight()) {
-            range.add(getPool().valueOf(x - 2, y + 1));
+        if (x - 2 >= 0 && y + 1 < chessBoardHeight) {
+            range.add(new Point(x - 2, y + 1));
         }
+    }
 
-        // bottom
-        if (x - 1 >= 0 && y + 2 < this.chessBoard.getHeight()) {
-            range.add(getPool().valueOf(x - 1, y + 2));
+    private void right(int x, int y, int chessBoardHeight, int chessBoardWidth) {
+        if (x + 2 < chessBoardWidth && y + 1 < chessBoardHeight) {
+            range.add(new Point(x + 2, y + 1));
         }
-        if (x + 1 < this.chessBoard.getWidth() && y + 2 < this.chessBoard.getHeight()) {
-            range.add(getPool().valueOf(x + 1, y + 2));
+        if (x + 2 < chessBoardWidth && y - 1 >= 0) {
+            range.add(new Point(x + 2, y - 1));
         }
-
-        // right
-        if (x + 2 < this.chessBoard.getWidth() && y + 1 < this.chessBoard.getHeight()) {
-            range.add(getPool().valueOf(x + 2, y + 1));
-        }
-        if (x + 2 < this.chessBoard.getWidth() && y - 1 >= 0) {
-            range.add(getPool().valueOf(x + 2, y - 1));
-        }
-        return range;
     }
 }

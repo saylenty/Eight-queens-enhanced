@@ -8,16 +8,14 @@ package com.gitlab.saylenty.chessPl.GameItems;
 
 import com.gitlab.saylenty.chessPl.GameItems.Figures.Figure;
 import com.gitlab.saylenty.chessPl.Infrustucture.Point;
-import com.gitlab.saylenty.chessPl.Infrustucture.PointsPool;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
-    private int height;
-    private int width;
-    private final PointsPool pointsPool;
+    private final int height;
+    private final int width;
     private final Set<Figure> boardFigures;
     private final Set<Point> allBoardPoints;
 
@@ -38,7 +36,6 @@ public class ChessBoard {
         this.height = height;
         boardFigures = new HashSet<>();
         allBoardPoints = new HashSet<>();
-        pointsPool = PointsPool.getInstance();
     }
 
     public Set<Point> getAllBoardPoints() {
@@ -47,7 +44,7 @@ public class ChessBoard {
         }
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                allBoardPoints.add(pointsPool.valueOf(x, y));
+                allBoardPoints.add(new Point(x, y));
             }
         }
         return allBoardPoints;

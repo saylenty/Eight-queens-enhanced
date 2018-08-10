@@ -12,8 +12,9 @@ import com.gitlab.saylenty.chessPl.Logic.ChessGame;
 import com.google.common.base.Stopwatch;
 
 import java.awt.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
@@ -37,7 +38,8 @@ public class Main {
         figures.add(figuresFactory.createFigure(King.class, Color.white, chessBoard)); // second King
 
         // print the message about game start
-        System.out.println(String.format("Game has been started at %s", new Date().toString()));
+        System.out.println(String.format("Game has been started at %s",
+                LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)));
 
         // create timer
         Stopwatch timer = Stopwatch.createStarted();
