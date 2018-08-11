@@ -1,44 +1,36 @@
-/**
- * Saylenty on 11-Apr-17.
- * Copyright (c) 2017
+/*
+  Saylenty on 11-Apr-17.
+  Copyright (c) 2017
  */
 package com.gitlab.saylenty.chessPl.GameItems.Figures;
 
-import com.gitlab.saylenty.chessPl.Infrustucture.Point;
+import com.gitlab.saylenty.chessPl.Infrustucture.Space;
 
 import java.awt.*;
-import java.util.Set;
 
-public class Bishop extends Figure {
+public class Bishop extends Piece {
 
     public Bishop() {
-        this(null, new Point(0, 0));
+        this(null, new Space(0, 0));
     }
 
     public Bishop(Color color) {
-        this(color, new Point(0, 0));
+        this(color, new Space(0, 0));
     }
 
-    public Bishop(Color color, Point position) {
+    public Bishop(Color color, Space position) {
         this("Bishop", color, position);
     }
 
-    public Bishop(String name, Color color, Point position) {
+    public Bishop(String name, Color color, Space position) {
         super(name, color, position);
     }
 
     @Override
-    public Set<Point> getRange() {
-        if (!range.isEmpty()) {
-            return range;
-        }
-        range.add(this.getPosition()); // add current position as initial
-
+    protected void computeCaptureZone() {
         upLeftDiagonal();
         downRightDiagonal();
         upRightDiagonal();
         bottomLeftDiagonal();
-
-        return range;
     }
 }

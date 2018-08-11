@@ -1,40 +1,33 @@
-/**
- * Saylenty on 11-Apr-17.
- * Copyright (c) 2017
+/*
+  Saylenty on 11-Apr-17.
+  Copyright (c) 2017
  */
 package com.gitlab.saylenty.chessPl.GameItems.Figures;
 
-import com.gitlab.saylenty.chessPl.Infrustucture.Point;
+import com.gitlab.saylenty.chessPl.Infrustucture.Space;
 
 import java.awt.*;
-import java.util.Set;
 
-public class King extends Figure {
+public class King extends Piece {
 
     public King() {
-        this(null, new Point(0, 0));
+        this(null, new Space(0, 0));
     }
 
-    public King(Color color, Point position) {
+    public King(Color color, Space position) {
         this("King", color, position);
     }
 
-    public King(String name, Color color, Point position) {
+    public King(String name, Color color, Space position) {
         super(name, color, position);
     }
 
     public King(Color color) {
-        this(color, new Point(0, 0));
+        this(color, new Space(0, 0));
     }
 
     @Override
-    public Set<Point> getRange() {
-        if (!range.isEmpty()) {
-            return range;
-        }
-
-        range.add(this.getPosition()); // add current position as initial
-
+    protected void computeCaptureZone() {
         left(1);
         right(1);
         up(1);
@@ -43,6 +36,5 @@ public class King extends Figure {
         downRightDiagonal(1);
         upRightDiagonal(1);
         bottomLeftDiagonal(1);
-        return range;
     }
 }

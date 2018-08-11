@@ -1,17 +1,17 @@
-/**
- * Saylenty on 11-Apr-17.
- * Copyright (c) 2017
+/*
+  Saylenty on 11-Apr-17.
+  Copyright (c) 2017
  */
 package com.gitlab.saylenty.chessPl.Infrustucture;
 
 /**
- * Point class for the ChessGame
+ * Space class for the ChessGame
  */
-public final class Point implements Comparable<Point> {
+public final class Space implements Comparable<Space> {
     private final int x;
     private final int y;
 
-    public Point(int x, int y) {
+    public Space(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -34,8 +34,8 @@ public final class Point implements Comparable<Point> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Point point = (Point) o;
-        return x == point.x && y == point.y;
+        Space space = (Space) o;
+        return x == space.x && y == space.y;
     }
 
     @Override
@@ -44,7 +44,7 @@ public final class Point implements Comparable<Point> {
     }
 
     @Override
-    public int compareTo(Point o) {
+    public int compareTo(Space o) {
         int cmp = Integer.compare(this.x, x);
         return cmp == 0 ? Integer.compare(this.y, y) : cmp;
     }

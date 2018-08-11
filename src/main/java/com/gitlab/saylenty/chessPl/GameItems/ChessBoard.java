@@ -1,23 +1,22 @@
-/**
- * <p>
- * Created by Saylenty on 11-Apr-17.
- * Copyright (c) 2017
- * </p>
+/*
+  <p>
+  Created by Saylenty on 11-Apr-17.
+  Copyright (c) 2017
+  </p>
  */
 package com.gitlab.saylenty.chessPl.GameItems;
 
-import com.gitlab.saylenty.chessPl.GameItems.Figures.Figure;
-import com.gitlab.saylenty.chessPl.Infrustucture.Point;
+import com.gitlab.saylenty.chessPl.GameItems.Figures.Piece;
+import com.gitlab.saylenty.chessPl.Infrustucture.Space;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class ChessBoard {
     private final int height;
     private final int width;
-    private final Set<Figure> boardFigures;
-    private final Set<Point> allBoardPoints;
+    private final Set<Piece> boardPieces;
+    private final Set<Space> allBoardSpaces;
 
     public int getHeight() {
         return height;
@@ -27,54 +26,56 @@ public class ChessBoard {
         return width;
     }
 
-    public Set<Figure> getBoardFigures() {
-        return boardFigures;
+    public Set<Piece> getBoardPieces() {
+        return boardPieces;
     }
 
     public ChessBoard(int height, int width) {
         this.width = width;
         this.height = height;
-        boardFigures = new HashSet<>();
-        allBoardPoints = new HashSet<>();
+        boardPieces = new HashSet<>();
+        allBoardSpaces = new HashSet<>();
     }
 
-    public Set<Point> getAllBoardPoints() {
-        if (!allBoardPoints.isEmpty()) {
-            return allBoardPoints;
+    public Set<Space> getAllBoardSpaces() {
+        if (!allBoardSpaces.isEmpty()) {
+            return allBoardSpaces;
         }
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                allBoardPoints.add(new Point(x, y));
+                allBoardSpaces.add(new Space(x, y));
             }
         }
-        return allBoardPoints;
+        return allBoardSpaces;
     }
 
-    public Set<Point> getFreePoints() {
-        Set<Point> difference = new HashSet<>(this.getAllBoardPoints());
-        difference.removeAll(boardFigures.stream().flatMap(x -> x.getRange().stream()).collect(Collectors.toSet()));
+    public Set<Space> getFreeSpaces() {
+        Set<Space> difference = new HashSet<>(this.getAllBoardSpaces());
+        Set<Space> collect = new HashSet<>((int) (width * height * .75));
+        boardPieces.forEach(f -> collect.addAll(f.getCaptureZone()));
+        difference.removeAll(collect);
         return difference;
     }
 
     /**
-     * Associates the board with figure
-     * @param figure a figure to associates with
+     * Associates the board with piece
+     * @param piece a piece to associates with
      * @return whether association were successful
      */
-    public boolean addFigure(Figure figure) {
-        boolean res = boardFigures.add(figure);
+    public boolean addPiece(Piece piece) {
+        boolean res = boardPieces.add(piece);
         if (res){
-            figure.setBoard(this);
+            piece.setBoard(this);
         }
         return res;
     }
 
     /**
-     * removes figure from the board
-     * @param figure a figure for removing
+     * removes piece from the board
+     * @param piece a piece for removing
      * @return whether removing were successful
      */
-    public boolean removeFigure(Figure figure) {
-        return boardFigures.remove(figure);
+    public boolean removePiece(Piece piece) {
+        return boardPieces.remove(piece);
     }
 }

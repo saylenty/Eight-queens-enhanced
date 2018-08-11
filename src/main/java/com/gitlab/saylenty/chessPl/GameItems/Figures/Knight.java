@@ -1,39 +1,33 @@
-/**
- * Saylenty on 11-Apr-17.
- * Copyright (c) 2017
+/*
+  Saylenty on 11-Apr-17.
+  Copyright (c) 2017
  */
 package com.gitlab.saylenty.chessPl.GameItems.Figures;
 
-import com.gitlab.saylenty.chessPl.Infrustucture.Point;
+import com.gitlab.saylenty.chessPl.Infrustucture.Space;
 
 import java.awt.*;
-import java.util.Set;
 
-public class Knight extends Figure {
+public class Knight extends Piece {
 
     public Knight() {
-        this(null, new Point(0, 0));
+        this(null, new Space(0, 0));
     }
 
-    public Knight(Color color, Point position) {
+    public Knight(Color color, Space position) {
         this("Knight", color, position);
     }
 
-    public Knight(String name, Color color, Point position) {
+    public Knight(String name, Color color, Space position) {
         super(name, color, position);
     }
 
     public Knight(Color color) {
-        this(color, new Point(0, 0));
+        this(color, new Space(0, 0));
     }
 
     @Override
-    public Set<Point> getRange() {
-        if (!range.isEmpty()) {
-            return range;
-        }
-        Point position = this.getPosition();
-        range.add(position); // add current position as initial
+    protected void computeCaptureZone() {
         int x = position.getX();
         int y = position.getY();
         int chessBoardHeight = this.chessBoard.getHeight();
@@ -43,42 +37,61 @@ public class Knight extends Figure {
         left(x, y, chessBoardHeight);
         bottom(x, y, chessBoardHeight, chessBoardWidth);
         right(x, y, chessBoardHeight, chessBoardWidth);
-        return range;
     }
 
     private void up(int x, int y) {
-        if (y - 2 >= 0 && x - 1 >= 0) {
-            range.add(new Point(x - 1, y - 2));
-        }
-        if (y - 2 >= 0 && x + 1 >= 0) {
-            range.add(new Point(x + 1, y - 2));
+        y -= 2;
+        if (y >= 0) {
+            int a = x - 1;
+            int b = x + 1;
+            if (a >= 0) {
+                captureZone.add(new Space(a, y));
+            }
+            if (b >= 0) {
+                captureZone.add(new Space(b, y));
+            }
         }
     }
 
     private void bottom(int x, int y, int chessBoardHeight, int chessBoardWidth) {
-        if (x - 1 >= 0 && y + 2 < chessBoardHeight) {
-            range.add(new Point(x - 1, y + 2));
-        }
-        if (x + 1 < chessBoardWidth && y + 2 < chessBoardHeight) {
-            range.add(new Point(x + 1, y + 2));
+        y += 2;
+        if (y < chessBoardHeight) {
+            int a = x - 1;
+            int b = x + 1;
+            if (a >= 0) {
+                captureZone.add(new Space(a, y));
+            }
+            if (b < chessBoardWidth) {
+                captureZone.add(new Space(b, y));
+            }
         }
     }
 
     private void left(int x, int y, int chessBoardHeight) {
-        if (x - 2 >= 0 && y - 1 >= 0) {
-            range.add(new Point(x - 2, y - 1));
-        }
-        if (x - 2 >= 0 && y + 1 < chessBoardHeight) {
-            range.add(new Point(x - 2, y + 1));
+        x -= 2;
+        if (x >= 0) {
+            int a = y - 1;
+            int b = y + 1;
+            if (a >= 0) {
+                captureZone.add(new Space(x, a));
+            }
+            if (b < chessBoardHeight) {
+                captureZone.add(new Space(x, b));
+            }
         }
     }
 
     private void right(int x, int y, int chessBoardHeight, int chessBoardWidth) {
-        if (x + 2 < chessBoardWidth && y + 1 < chessBoardHeight) {
-            range.add(new Point(x + 2, y + 1));
-        }
-        if (x + 2 < chessBoardWidth && y - 1 >= 0) {
-            range.add(new Point(x + 2, y - 1));
+        x += 2;
+        if (x < chessBoardWidth) {
+            int a = y + 1;
+            int b = y - 1;
+            if (a < chessBoardHeight) {
+                captureZone.add(new Space(x, a));
+            }
+            if (b >= 0) {
+                captureZone.add(new Space(x, b));
+            }
         }
     }
 }

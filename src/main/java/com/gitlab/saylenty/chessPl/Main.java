@@ -1,6 +1,6 @@
-/**
- * Saylenty on 11-Apr-17.
- * Copyright (c) 2017
+/*
+  Saylenty on 11-Apr-17.
+  Copyright (c) 2017
  */
 package com.gitlab.saylenty.chessPl;
 
@@ -27,16 +27,16 @@ public class Main {
         // create the game board
         ChessBoard chessBoard = new ChessBoard(9, 6);
 
-        // create figures and add them to the game board
-        ArrayList<Figure> figures = new ArrayList<>(6);
+        // create pieces and add them to the game board
+        ArrayList<Piece> pieces = new ArrayList<>(6);
 
         FiguresFactory figuresFactory = new FiguresFactory();
-        figures.add(figuresFactory.createFigure(Queen.class, Color.black, chessBoard)); // one Queen
-        figures.add(figuresFactory.createFigure(Rock.class, Color.black, chessBoard)); // one Rock
-        figures.add(figuresFactory.createFigure(Knight.class, Color.black, chessBoard)); // one Knight
-        figures.add(figuresFactory.createFigure(Bishop.class, Color.black, chessBoard)); // one Bishop
-        figures.add(figuresFactory.createFigure(King.class, Color.black, chessBoard)); // first King
-        figures.add(figuresFactory.createFigure(King.class, Color.white, chessBoard)); // second King
+        pieces.add(figuresFactory.createFigure(Queen.class, Color.black, chessBoard)); // one Queen
+        pieces.add(figuresFactory.createFigure(Rock.class, Color.black, chessBoard)); // one Rock
+        pieces.add(figuresFactory.createFigure(Knight.class, Color.black, chessBoard)); // one Knight
+        pieces.add(figuresFactory.createFigure(Bishop.class, Color.black, chessBoard)); // one Bishop
+        pieces.add(figuresFactory.createFigure(King.class, Color.black, chessBoard)); // first King
+        pieces.add(figuresFactory.createFigure(King.class, Color.white, chessBoard)); // second King
 
         // print the message about game start
         System.out.println(String.format("Game has been started at %s",
@@ -45,7 +45,7 @@ public class Main {
         // create timer
         Stopwatch timer = Stopwatch.createStarted();
 
-        int result = game.start(new BFRecursiveStrategy(chessBoard, figures));
+        int result = game.start(new BFRecursiveStrategy(chessBoard, pieces));
 
         // stop the timer
         timer.stop();
@@ -53,5 +53,9 @@ public class Main {
         // print the result of the game
         System.out.println(String.format("The result is %d", result));
         System.out.println(String.format("Elapsed time (ms) %d", timer.elapsed(TimeUnit.MILLISECONDS)));
+
+        // print the message about game end
+        System.out.println(String.format("Game has been ended at %s",
+                LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))));
     }
 }

@@ -1,11 +1,11 @@
-/**
- * Saylenty on 11-Apr-17.
- * Copyright (c) 2017
+/*
+  Saylenty on 11-Apr-17.
+  Copyright (c) 2017
  */
 package com.gitlab.saylenty.chessPl.Infrustucture;
 
 import com.gitlab.saylenty.chessPl.GameItems.ChessBoard;
-import com.gitlab.saylenty.chessPl.GameItems.Figures.Figure;
+import com.gitlab.saylenty.chessPl.GameItems.Figures.Piece;
 
 import java.awt.*;
 
@@ -21,7 +21,7 @@ public class FiguresFactory {
      * @param board a board to place the figure at
      * @return created figure
      */
-    public <T extends Figure> T createFigure(Class<T> clazz, Color color, ChessBoard board) {
+    public <T extends Piece> T createFigure(Class<T> clazz, Color color, ChessBoard board) {
         T t;
         try {
             t = clazz.newInstance();
