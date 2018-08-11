@@ -33,7 +33,7 @@ public abstract class Figure {
     /**
      * A figure range
      */
-    Set<Point> range;
+    final Set<Point> range;
 
     Figure(String name, Color color, Point position) {
         this.name = name;
@@ -52,6 +52,7 @@ public abstract class Figure {
 
     /**
      * Apply new color for a figure
+     *
      * @param color new color of the figure
      */
     public void setColor(Color color) {
@@ -67,6 +68,7 @@ public abstract class Figure {
 
     /**
      * Apply new name for the figure
+     *
      * @param name new figure name
      */
     public void setName(String name) {
@@ -75,6 +77,7 @@ public abstract class Figure {
 
     /**
      * Associates the figure with the chess board
+     *
      * @param chessBoard a board associate the figure with
      */
     public void setBoard(ChessBoard chessBoard) {
@@ -83,7 +86,7 @@ public abstract class Figure {
 
     public boolean removeFromBoard(ChessBoard chessBoard) {
         boolean res = this.chessBoard.removeFigure(this);
-        if (res){
+        if (res) {
             this.chessBoard = null;
         }
         return res;
@@ -98,6 +101,7 @@ public abstract class Figure {
 
     /**
      * Move the figure to new position
+     *
      * @param position a new figure position
      */
     public void setPosition(Point position) {
@@ -109,6 +113,7 @@ public abstract class Figure {
 
     /**
      * Moves a figure to an other free position
+     *
      * @return indicates weather the moving was successful
      */
     public boolean move() {
@@ -143,17 +148,16 @@ public abstract class Figure {
 
     /**
      * Updates the figure range with positions that are above or until limit is exceeded
+     *
      * @param limit number of max points from the current figure position
-     * See also {@link #up()}.
+     *              See also {@link #up()}.
      */
     final void up(int limit) {
         int y = position.getY();
         int x = position.getX();
-        int i = 1;
-        while (y - i >= 0 && limit != 0) {
-            Point p = new Point(x, y - i++);
+        while (--y >= 0 && limit-- != 0) {
+            Point p = new Point(x, y);
             range.add(p);
-            limit--;
         }
     }
 
@@ -166,17 +170,16 @@ public abstract class Figure {
 
     /**
      * Updates the figure range with positions that are below or until limit is exceeded
+     *
      * @param limit number of max points from the current figure position
-     * See also {@link #down()}.
+     *              See also {@link #down()}.
      */
     final void down(int limit) {
         int y = position.getY();
         int x = position.getX();
-        int i = 1;
-        while (y + i < this.chessBoard.getHeight() && limit != 0) {
-            Point p = new Point(x, y + i++);
+        while (++y < this.chessBoard.getHeight() && limit-- != 0) {
+            Point p = new Point(x, y);
             range.add(p);
-            limit--;
         }
     }
 
@@ -189,17 +192,16 @@ public abstract class Figure {
 
     /**
      * Updates the figure range with positions that are on the left or until limit is exceeded
+     *
      * @param limit number of max points from the current figure position
-     * See also {@link #left()}.
+     *              See also {@link #left()}.
      */
     final void left(int limit) {
         int y = position.getY();
         int x = position.getX();
-        int i = 1;
-        while (x - i >= 0 && limit != 0) {
-            Point p = new Point(x - i++, y);
+        while (--x >= 0 && limit-- != 0) {
+            Point p = new Point(x, y);
             range.add(p);
-            limit--;
         }
     }
 
@@ -212,18 +214,17 @@ public abstract class Figure {
 
     /**
      * Updates the figure range with positions that are on the right or until limit is exceeded
+     *
      * @param limit number of max points from the current figure position
-     * See also {@link #right()}.
+     *              See also {@link #right()}.
      */
     final void right(int limit) {
         int y = position.getY();
         int x = position.getX();
         int chessBoardWidth = this.chessBoard.getWidth();
-        int i = 1;
-        while (x + i < chessBoardWidth && limit != 0) {
-            Point p = new Point(x + i++, y);
+        while (++x < chessBoardWidth && limit-- != 0) {
+            Point p = new Point(x, y);
             range.add(p);
-            limit--;
         }
     }
 
@@ -236,19 +237,16 @@ public abstract class Figure {
 
     /**
      * Updates the figure range with positions that are on the up left diagonal or until limit is exceeded
+     *
      * @param limit number of max points from the current figure position
-     * See also {@link #upLeftDiagonal()}.
+     *              See also {@link #upLeftDiagonal()}.
      */
     final void upLeftDiagonal(int limit) {
         int y = position.getY();
         int x = position.getX();
-        // diagonal left upwards
-        int i = 1;
-        while (x - i >= 0 && y - i >= 0 && limit != 0) {
-            Point p = new Point(x - i, y - i);
+        while (--x >= 0 && --y >= 0 && limit-- != 0) {
+            Point p = new Point(x, y);
             range.add(p);
-            i++;
-            limit--;
         }
     }
 
@@ -261,46 +259,40 @@ public abstract class Figure {
 
     /**
      * Updates the figure range with positions that are on the up right diagonal or until limit is exceeded
+     *
      * @param limit number of max points from the current figure position
-     * See also {@link #upRightDiagonal()}.
+     *              See also {@link #upRightDiagonal()}.
      */
     final void upRightDiagonal(int limit) {
         int y = position.getY();
         int x = position.getX();
         int chessBoardWidth = this.chessBoard.getWidth();
-        // diagonal right upwards
-        int i = 1;
-        while (x + i < chessBoardWidth && y - i >= 0 && limit != 0) {
-            Point p = new Point(x + i, y - i);
+        while (++x < chessBoardWidth && --y >= 0 && limit-- != 0) {
+            Point p = new Point(x, y);
             range.add(p);
-            i++;
-            limit--;
         }
     }
 
     /**
      * Updates the range of shapes with all the positions that are on the down left diagonal
      */
-    final void downLeftDiagonal() {
-        downLeftDiagonal(-1);
+    final void bottomLeftDiagonal() {
+        bottomLeftDiagonal(-1);
     }
 
     /**
      * Updates the figure range with positions that are on the down left diagonal or until limit is exceeded
+     *
      * @param limit number of max points from the current figure position
-     * See also {@link #downLeftDiagonal()}.
+     *              See also {@link #bottomLeftDiagonal()}.
      */
-    final void downLeftDiagonal(int limit) {
+    final void bottomLeftDiagonal(int limit) {
         int y = position.getY();
         int x = position.getX();
         int chessBoardHeight = this.chessBoard.getHeight();
-        // diagonal left downwards
-        int i = 1;
-        while (x - i >= 0 && y + i < chessBoardHeight && limit != 0) {
-            Point p = new Point(x - i, y + i);
+        while (--x >= 0 && ++y < chessBoardHeight && limit-- != 0) {
+            Point p = new Point(x, y);
             range.add(p);
-            i++;
-            limit--;
         }
     }
 
@@ -313,21 +305,18 @@ public abstract class Figure {
 
     /**
      * Updates the figure range with positions that are on the down right diagonal or until limit is exceeded
+     *
      * @param limit number of max points from the current figure position
-     * See also {@link #downRightDiagonal()}.
+     *              See also {@link #downRightDiagonal()}.
      */
     final void downRightDiagonal(int limit) {
         int y = position.getY();
         int x = position.getX();
         int chessBoardWidth = this.chessBoard.getWidth();
         int chessBoardHeight = this.chessBoard.getHeight();
-        // diagonal right downwards
-        int i = 1;
-        while (x + i < chessBoardWidth && y + i < chessBoardHeight && limit != 0) {
-            Point p = new Point(x + i, y + i);
+        while (++x < chessBoardWidth && ++y < chessBoardHeight && limit-- != 0) {
+            Point p = new Point(x, y);
             range.add(p);
-            i++;
-            limit--;
         }
     }
 }

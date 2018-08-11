@@ -41,7 +41,7 @@ public class Queen extends Figure {
         upLeftDiagonal();
         downRightDiagonal();
         upRightDiagonal();
-        downLeftDiagonal();
+        bottomLeftDiagonal();
 
         return range;
     }

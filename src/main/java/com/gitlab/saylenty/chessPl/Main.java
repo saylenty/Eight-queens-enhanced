@@ -14,6 +14,7 @@ import com.google.common.base.Stopwatch;
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -34,12 +35,12 @@ public class Main {
         figures.add(figuresFactory.createFigure(Rock.class, Color.black, chessBoard)); // one Rock
         figures.add(figuresFactory.createFigure(Knight.class, Color.black, chessBoard)); // one Knight
         figures.add(figuresFactory.createFigure(Bishop.class, Color.black, chessBoard)); // one Bishop
-        figures.add(figuresFactory.createFigure(King.class, Color.black, chessBoard)); // one King
+        figures.add(figuresFactory.createFigure(King.class, Color.black, chessBoard)); // first King
         figures.add(figuresFactory.createFigure(King.class, Color.white, chessBoard)); // second King
 
         // print the message about game start
         System.out.println(String.format("Game has been started at %s",
-                LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)));
+                LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))));
 
         // create timer
         Stopwatch timer = Stopwatch.createStarted();

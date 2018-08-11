@@ -42,7 +42,7 @@ public class King extends Figure {
         upLeftDiagonal(1);
         downRightDiagonal(1);
         upRightDiagonal(1);
-        downLeftDiagonal(1);
+        bottomLeftDiagonal(1);
         return range;
     }
 }

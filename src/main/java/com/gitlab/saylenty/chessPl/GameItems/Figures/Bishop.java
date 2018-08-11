@@ -37,7 +37,7 @@ public class Bishop extends Figure {
         upLeftDiagonal();
         downRightDiagonal();
         upRightDiagonal();
-        downLeftDiagonal();
+        bottomLeftDiagonal();
 
         return range;
     }

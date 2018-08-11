@@ -44,5 +44,5 @@ We have the following figures:
 
 __Results__:
 <ul>
-    <li>Takes 73503ms <=> on Intel Core i7, 2.0Ghz, 16GB RAM</li>
+    <li>Takes 63333ms <=> on Intel Core i7, 2.0Ghz, 16GB RAM</li>
 </ul>

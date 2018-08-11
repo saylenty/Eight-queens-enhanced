@@ -38,8 +38,7 @@ public class BFRecursiveStrategy implements PlacementStrategy {
         solverThread.start();
         // we need calculate the number of figures that are of the same class (e.g. King, Queen, etc.) and color
         // if these "same" figures is swapped -> the number of solutions shouldn't be changed
-        // NOTE: this should be rewritten in a way with an additional figure class specific point pool to increase performance
-        // use memory efficient variant here because the solution calc time usually takes some time and memory
+        // TODO think how to optimize the algorithm so that the code below become unnecessary
         int c = 1;
         for (int i = 0; i < figures.size() - 1; i++) {
             Figure figure1 = figures.get(i);
