@@ -35,4 +35,4 @@ We have the following pieces:
 * ChessBoard [9x6]
 
 __Results__:
-* Elapsed time (ms) 53263 <=> on Intel Core i7, 2.0Ghz, 16GB RAM
+* Elapsed time (ms) 45766 <=> on Intel Core i7, 2.0Ghz, 16GB RAM
