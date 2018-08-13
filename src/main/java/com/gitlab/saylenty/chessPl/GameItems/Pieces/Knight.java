@@ -2,7 +2,7 @@
   Saylenty on 11-Apr-17.
   Copyright (c) 2017
  */
-package com.gitlab.saylenty.chessPl.GameItems.Figures;
+package com.gitlab.saylenty.chessPl.GameItems.Pieces;
 
 import com.gitlab.saylenty.chessPl.Infrustucture.Space;
 

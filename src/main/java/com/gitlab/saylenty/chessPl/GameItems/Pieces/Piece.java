@@ -2,7 +2,7 @@
   Saylenty on 11-Apr-17.
   Copyright (c) 2017
  */
-package com.gitlab.saylenty.chessPl.GameItems.Figures;
+package com.gitlab.saylenty.chessPl.GameItems.Pieces;
 
 import com.gitlab.saylenty.chessPl.GameItems.ChessBoard;
 import com.gitlab.saylenty.chessPl.Infrustucture.Space;
@@ -63,7 +63,7 @@ public abstract class Piece {
     }
 
     /**
-     * @return a name of the piece
+     * @return name of the piece
      */
     public String getName() {
         return name;
@@ -81,22 +81,14 @@ public abstract class Piece {
     /**
      * Associates the piece with the chess board
      *
-     * @param chessBoard a board associate the piece with
+     * @param chessBoard board associate the piece with
      */
     public void setBoard(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
     }
 
-    public boolean removeFromBoard(ChessBoard chessBoard) {
-        boolean res = this.chessBoard.removePiece(this);
-        if (res) {
-            this.chessBoard = null;
-        }
-        return res;
-    }
-
     /**
-     * @return a piece position
+     * @return piece position
      */
     public Space getPosition() {
         return position;
@@ -105,13 +97,10 @@ public abstract class Piece {
     /**
      * Moves the piece to new position
      *
-     * @param position a new piece position
+     * @param position new piece position
      */
     public void setPosition(Space position) {
-        if (!this.position.equals(position)) {
-            this.position = position;
-            captureZone.clear(); // TODO to move method
-        }
+        this.position = position;
     }
 
     /**
@@ -124,23 +113,26 @@ public abstract class Piece {
             iterator = chessBoard.getFreeSpaces().iterator();
         }
         if (iterator.hasNext()) {
-            this.setPosition(iterator.next());
+            // have new available position (space) to move
+            setPosition(iterator.next());
+            // clear capture zone because of new piece place
+            captureZone.clear();
             return true;
         }
+        // don't have any free position (space) to move
         iterator = null;
         return false;
     }
 
     /**
-     * @return the killing zone of the piece
+     * @return kill zone of the piece
      */
     public Set<Space> getCaptureZone(){
-        if (!captureZone.isEmpty()) {
-            return captureZone;
+        if (captureZone.isEmpty()) {
+            // add current position as initial
+            captureZone.add(this.getPosition());
+            computeCaptureZone();
         }
-        // add current position as initial
-        captureZone.add(this.getPosition());
-        computeCaptureZone();
         return captureZone;
     }
 
@@ -151,8 +143,8 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return String.format("Piece{name='%s', position={x = %d, y = %d}, color='%s'}", name,
-                position.getX(), position.getY(), colorPrinter.getColorName(color.getRGB()));
+        return String.format("%s{name='%s', position={x='%d', y='%d'}, color='%s'}", getClass().getSimpleName(),
+                getName(), position.getX(), position.getY(), colorPrinter.getColorName(color.getRGB()));
     }
 
     /**
@@ -169,8 +161,8 @@ public abstract class Piece {
      *              See also {@link #up()}.
      */
     final void up(int limit) {
-        int y = position.getY();
         int x = position.getX();
+        int y = position.getY();
         while (--y >= 0 && limit-- != 0) {
             Space p = new Space(x, y);
             captureZone.add(p);
@@ -191,8 +183,8 @@ public abstract class Piece {
      *              See also {@link #down()}.
      */
     final void down(int limit) {
-        int y = position.getY();
         int x = position.getX();
+        int y = position.getY();
         while (++y < this.chessBoard.getHeight() && limit-- != 0) {
             Space p = new Space(x, y);
             captureZone.add(p);
@@ -213,8 +205,8 @@ public abstract class Piece {
      *              See also {@link #left()}.
      */
     final void left(int limit) {
-        int y = position.getY();
         int x = position.getX();
+        int y = position.getY();
         while (--x >= 0 && limit-- != 0) {
             Space p = new Space(x, y);
             captureZone.add(p);
@@ -235,8 +227,8 @@ public abstract class Piece {
      *              See also {@link #right()}.
      */
     final void right(int limit) {
-        int y = position.getY();
         int x = position.getX();
+        int y = position.getY();
         int chessBoardWidth = this.chessBoard.getWidth();
         while (++x < chessBoardWidth && limit-- != 0) {
             Space p = new Space(x, y);
@@ -258,8 +250,8 @@ public abstract class Piece {
      *              See also {@link #upLeftDiagonal()}.
      */
     final void upLeftDiagonal(int limit) {
-        int y = position.getY();
         int x = position.getX();
+        int y = position.getY();
         while (--x >= 0 && --y >= 0 && limit-- != 0) {
             Space p = new Space(x, y);
             captureZone.add(p);
@@ -280,8 +272,8 @@ public abstract class Piece {
      *              See also {@link #upRightDiagonal()}.
      */
     final void upRightDiagonal(int limit) {
-        int y = position.getY();
         int x = position.getX();
+        int y = position.getY();
         int chessBoardWidth = this.chessBoard.getWidth();
         while (++x < chessBoardWidth && --y >= 0 && limit-- != 0) {
             Space p = new Space(x, y);
@@ -303,8 +295,8 @@ public abstract class Piece {
      *              See also {@link #bottomLeftDiagonal()}.
      */
     final void bottomLeftDiagonal(int limit) {
-        int y = position.getY();
         int x = position.getX();
+        int y = position.getY();
         int chessBoardHeight = this.chessBoard.getHeight();
         while (--x >= 0 && ++y < chessBoardHeight && limit-- != 0) {
             Space p = new Space(x, y);
@@ -326,8 +318,8 @@ public abstract class Piece {
      *              See also {@link #downRightDiagonal()}.
      */
     final void downRightDiagonal(int limit) {
-        int y = position.getY();
         int x = position.getX();
+        int y = position.getY();
         int chessBoardWidth = this.chessBoard.getWidth();
         int chessBoardHeight = this.chessBoard.getHeight();
         while (++x < chessBoardWidth && ++y < chessBoardHeight && limit-- != 0) {

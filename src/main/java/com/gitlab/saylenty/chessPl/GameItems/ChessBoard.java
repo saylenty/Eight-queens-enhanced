@@ -6,7 +6,7 @@
  */
 package com.gitlab.saylenty.chessPl.GameItems;
 
-import com.gitlab.saylenty.chessPl.GameItems.Figures.Piece;
+import com.gitlab.saylenty.chessPl.GameItems.Pieces.Piece;
 import com.gitlab.saylenty.chessPl.Infrustucture.Space;
 import com.google.common.collect.Sets;
 
@@ -58,28 +58,24 @@ public class ChessBoard {
      * @return all spaces for this chessBoard instance
      */
     public Set<Space> getFreeSpaces() {
-        Set<Space> collect = new HashSet<>((int) (width * height * .75));
-        boardPieces.stream().map(Piece::getCaptureZone).forEach(collect::addAll);
-        return Sets.difference(this.getBoardSpaces(), collect);
+        Set<Space> piecesCaptureZone = new HashSet<>((int) (width * height * .75));
+        boardPieces.stream().map(Piece::getCaptureZone).forEach(piecesCaptureZone::addAll);
+        return Sets.difference(this.getBoardSpaces(), piecesCaptureZone);
     }
 
     /**
      * Associates the board with piece
      * @param piece a piece to associates with
-     * @return whether association were successful
+     * @return whether association was successful or not
      */
     public boolean addPiece(Piece piece) {
-        boolean res = boardPieces.add(piece);
-        if (res){
-            piece.setBoard(this);
-        }
-        return res;
+        return boardPieces.add(piece);
     }
 
     /**
      * removes piece from the board
      * @param piece a piece for removing
-     * @return whether removing were successful
+     * @return whether removing was successful or not
      */
     public boolean removePiece(Piece piece) {
         return boardPieces.remove(piece);

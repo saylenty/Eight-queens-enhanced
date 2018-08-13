@@ -2,27 +2,27 @@
   Saylenty on 11-Apr-17.
   Copyright (c) 2017
  */
-package com.gitlab.saylenty.chessPl.GameItems.Figures;
+package com.gitlab.saylenty.chessPl.GameItems.Pieces;
 
 import com.gitlab.saylenty.chessPl.Infrustucture.Space;
 
 import java.awt.*;
 
-public class Queen extends Piece {
+public class Rock extends Piece {
 
-    public Queen() {
+    public Rock() {
         this(null, new Space(0, 0));
     }
 
-    public Queen(Color color, Space position) {
-        this("Queen", color, position);
+    public Rock(Color color, Space position) {
+        this("Rock", color, position);
     }
 
-    public Queen(String name, Color color, Space position) {
+    public Rock(String name, Color color, Space position) {
         super(name, color, position);
     }
 
-    public Queen(Color color) {
+    public Rock(Color color) {
         this(color, new Space(0, 0));
     }
 
@@ -32,9 +32,5 @@ public class Queen extends Piece {
         down();
         left();
         right();
-        upLeftDiagonal();
-        downRightDiagonal();
-        upRightDiagonal();
-        bottomLeftDiagonal();
     }
 }
