@@ -45,7 +45,7 @@ public final class Space implements Comparable<Space> {
 
     @Override
     public int compareTo(Space o) {
-        int cmp = Integer.compare(this.x, x);
-        return cmp == 0 ? Integer.compare(this.y, y) : cmp;
+        int cmp = Integer.compare(this.x, o.x);
+        return cmp == 0 ? Integer.compare(this.y, o.y) : cmp;
     }
 }
