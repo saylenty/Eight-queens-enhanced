@@ -7,6 +7,8 @@ package com.gitlab.saylenty.chessPl.GameItems.Pieces;
 import com.gitlab.saylenty.chessPl.GameItems.ChessBoard;
 import com.gitlab.saylenty.chessPl.Infrustucture.Space;
 import com.gitlab.saylenty.chessPl.Infrustucture.utils.ColorPrinter;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.awt.*;
 import java.util.HashSet;
@@ -18,19 +20,36 @@ import java.util.Set;
  */
 public abstract class Piece {
 
-    private String name;
-    private Color color;
+    @Getter
+    private final String name;
+
+    @Getter
+    private final Color color;
+
+    @Getter
+    private final String colorName;
+
+    @Getter
+    @Setter
     private ColorPrinter colorPrinter;
+
+    /**
+     * ChessBoard free spaces iterator
+     */
     private Iterator<Space> iterator;
 
     /**
      * Current piece position
      */
+    @Getter
+    @Setter
     Space position;
 
     /**
      * A chess board the piece is associated with
      */
+    @Getter
+    @Setter
     ChessBoard chessBoard;
 
     /**
@@ -44,63 +63,7 @@ public abstract class Piece {
         this.position = position;
         captureZone = new HashSet<>();
         colorPrinter = new ColorPrinter();
-    }
-
-    /**
-     * @return current color of the piece
-     */
-    public Color getColor() {
-        return color;
-    }
-
-    /**
-     * Applies new color for a piece
-     *
-     * @param color new color of the piece
-     */
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    /**
-     * @return name of the piece
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Applies new name for the piece
-     *
-     * @param name new piece name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Associates the piece with the chess board
-     *
-     * @param chessBoard board associate the piece with
-     */
-    public void setBoard(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
-    }
-
-    /**
-     * @return piece position
-     */
-    public Space getPosition() {
-        return position;
-    }
-
-    /**
-     * Moves the piece to new position
-     *
-     * @param position new piece position
-     */
-    public void setPosition(Space position) {
-        this.position = position;
+        colorName = color == null ? "" : colorPrinter.getColorName(color.getRGB());
     }
 
     /**
@@ -127,7 +90,7 @@ public abstract class Piece {
     /**
      * @return kill zone of the piece
      */
-    public Set<Space> getCaptureZone(){
+    public Set<Space> getCaptureZone() {
         if (captureZone.isEmpty()) {
             // add current position as initial
             captureZone.add(this.getPosition());
@@ -144,7 +107,7 @@ public abstract class Piece {
     @Override
     public String toString() {
         return String.format("%s{name='%s', position={x='%d', y='%d'}, color='%s'}", getClass().getSimpleName(),
-                getName(), position.getX(), position.getY(), colorPrinter.getColorName(color.getRGB()));
+                getName(), position.getX(), position.getY(), colorName);
     }
 
     /**
@@ -185,7 +148,8 @@ public abstract class Piece {
     final void down(int limit) {
         int x = position.getX();
         int y = position.getY();
-        while (++y < this.chessBoard.getHeight() && limit-- != 0) {
+        int chessBoardHeight = this.chessBoard.getHeight();
+        while (++y < chessBoardHeight && limit-- != 0) {
             Space p = new Space(x, y);
             captureZone.add(p);
         }

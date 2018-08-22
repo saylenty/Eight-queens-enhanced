@@ -6,6 +6,7 @@ package com.gitlab.saylenty.chessPl.Logic;
 
 import com.gitlab.saylenty.chessPl.GameItems.ChessBoard;
 import com.gitlab.saylenty.chessPl.GameItems.Pieces.Piece;
+import com.gitlab.saylenty.chessPl.Infrustucture.Space;
 
 import java.util.List;
 import java.util.Set;
@@ -43,16 +44,14 @@ public class BFRecursiveStrategy implements PlacementStrategy {
         }
         Piece current = pieces.get(startIndex);
 
-        NEXT_MOVE:
         while (current.move()) {
-            for (Piece piece : board.getBoardPieces()) {
-                if (piece.getCaptureZone().contains(current.getPosition()) ||
-                        current.getCaptureZone().contains(piece.getPosition())) {
-                    // piece takes the current or current takes the piece
-                    continue NEXT_MOVE;
-                }
+            Set<Space> currentCaptureZone = current.getCaptureZone();
+            if (board.getBoardPieces().stream().map(Piece::getPosition)
+                    .anyMatch(currentCaptureZone::contains)) {
+                // current takes the piece
+                continue;
             }
-            // current piece take zone doesn't intersect with other's
+            // current piece doesn't take any other piece
             board.addPiece(current);
 
             // continue with another piece

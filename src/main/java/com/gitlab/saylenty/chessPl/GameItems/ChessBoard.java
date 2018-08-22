@@ -9,27 +9,22 @@ package com.gitlab.saylenty.chessPl.GameItems;
 import com.gitlab.saylenty.chessPl.GameItems.Pieces.Piece;
 import com.gitlab.saylenty.chessPl.Infrustucture.Space;
 import com.google.common.collect.Sets;
+import lombok.Getter;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class ChessBoard {
+    @Getter
     private final int height;
+
+    @Getter
     private final int width;
+
+    @Getter
     private final Set<Piece> boardPieces;
+
     private final Set<Space> boardSpaces;
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public Set<Piece> getBoardPieces() {
-        return boardPieces;
-    }
 
     public ChessBoard(int height, int width) {
         this.width = width;
@@ -40,6 +35,7 @@ public class ChessBoard {
 
     /**
      * Calculates (if necessary) all spaces that chessBoard contains
+     *
      * @return all spaces for this chessBoard instance
      */
     public Set<Space> getBoardSpaces() {
@@ -55,6 +51,7 @@ public class ChessBoard {
 
     /**
      * Calculates all free (that is not in any figure danger zone) board spaces
+     *
      * @return all spaces for this chessBoard instance
      */
     public Set<Space> getFreeSpaces() {
@@ -65,6 +62,7 @@ public class ChessBoard {
 
     /**
      * Associates the board with piece
+     *
      * @param piece a piece to associates with
      * @return whether association was successful or not
      */
@@ -73,7 +71,8 @@ public class ChessBoard {
     }
 
     /**
-     * removes piece from the board
+     * Removes piece from the board
+     *
      * @param piece a piece for removing
      * @return whether removing was successful or not
      */
