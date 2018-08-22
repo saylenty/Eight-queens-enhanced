@@ -2,7 +2,7 @@
   Saylenty on 11-Apr-17.
   Copyright (c) 2017
  */
-package com.gitlab.saylenty.chessPl.Infrustucture;
+package com.gitlab.saylenty.chessPl.gameItems;
 
 import lombok.Data;
 import lombok.ToString;

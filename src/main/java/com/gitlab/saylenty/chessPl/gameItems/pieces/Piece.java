@@ -2,11 +2,11 @@
   Saylenty on 11-Apr-17.
   Copyright (c) 2017
  */
-package com.gitlab.saylenty.chessPl.GameItems.Pieces;
+package com.gitlab.saylenty.chessPl.gameItems.pieces;
 
-import com.gitlab.saylenty.chessPl.GameItems.ChessBoard;
-import com.gitlab.saylenty.chessPl.Infrustucture.Space;
-import com.gitlab.saylenty.chessPl.Infrustucture.utils.ColorPrinter;
+import com.gitlab.saylenty.chessPl.gameItems.ChessBoard;
+import com.gitlab.saylenty.chessPl.gameItems.Space;
+import com.gitlab.saylenty.chessPl.utils.ColorPrinter;
 import lombok.Getter;
 import lombok.Setter;
 

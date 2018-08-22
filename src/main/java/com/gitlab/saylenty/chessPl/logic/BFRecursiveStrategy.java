@@ -2,11 +2,11 @@
   Saylenty on 11-Apr-17.
   Copyright (c) 2017
  */
-package com.gitlab.saylenty.chessPl.Logic;
+package com.gitlab.saylenty.chessPl.logic;
 
-import com.gitlab.saylenty.chessPl.GameItems.ChessBoard;
-import com.gitlab.saylenty.chessPl.GameItems.Pieces.Piece;
-import com.gitlab.saylenty.chessPl.Infrustucture.Space;
+import com.gitlab.saylenty.chessPl.gameItems.ChessBoard;
+import com.gitlab.saylenty.chessPl.gameItems.pieces.Piece;
+import com.gitlab.saylenty.chessPl.gameItems.Space;
 
 import java.util.List;
 import java.util.Set;
@@ -31,8 +31,8 @@ public class BFRecursiveStrategy implements PlacementStrategy {
         // calculate the number of figures possible combinations
         return recursiveStrategy(0, 0, set -> {
             // print result
-            /*set.forEach(System.out::println);
-            System.out.println();*/
+            set.forEach(System.out::println);
+            System.out.println();
         });
     }
 

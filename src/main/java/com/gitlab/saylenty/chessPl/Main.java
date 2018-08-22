@@ -4,11 +4,11 @@
  */
 package com.gitlab.saylenty.chessPl;
 
-import com.gitlab.saylenty.chessPl.GameItems.ChessBoard;
-import com.gitlab.saylenty.chessPl.GameItems.Pieces.*;
-import com.gitlab.saylenty.chessPl.Infrustucture.GamePiecesFactory;
-import com.gitlab.saylenty.chessPl.Logic.BFRecursiveStrategy;
-import com.gitlab.saylenty.chessPl.Logic.ChessGame;
+import com.gitlab.saylenty.chessPl.gameItems.ChessBoard;
+import com.gitlab.saylenty.chessPl.gameItems.GamePiecesFactory;
+import com.gitlab.saylenty.chessPl.gameItems.pieces.*;
+import com.gitlab.saylenty.chessPl.logic.BFRecursiveStrategy;
+import com.gitlab.saylenty.chessPl.logic.ChessGame;
 import com.google.common.base.Stopwatch;
 
 import java.awt.*;
@@ -24,19 +24,18 @@ public class Main {
         // create the ChessGame
         ChessGame game = new ChessGame();
 
+        int queensNumber = 4;
+
         // create the game board
-        ChessBoard chessBoard = new ChessBoard(9, 6);
+        ChessBoard chessBoard = new ChessBoard(queensNumber, queensNumber);
 
         // create pieces and add them to the game board
-        ArrayList<Piece> pieces = new ArrayList<>(6);
+        ArrayList<Piece> pieces = new ArrayList<>(queensNumber);
 
         GamePiecesFactory gamePiecesFactory = new GamePiecesFactory();
-        pieces.add(gamePiecesFactory.createPiece(Queen.class, Color.black, chessBoard)); // one Queen
-        pieces.add(gamePiecesFactory.createPiece(Rock.class, Color.black, chessBoard)); // one Rock
-        pieces.add(gamePiecesFactory.createPiece(Knight.class, Color.black, chessBoard)); // one Knight
-        pieces.add(gamePiecesFactory.createPiece(Bishop.class, Color.black, chessBoard)); // one Bishop
-        pieces.add(gamePiecesFactory.createPiece(King.class, Color.black, chessBoard)); // first King
-        pieces.add(gamePiecesFactory.createPiece(King.class, Color.white, chessBoard)); // second King
+        for (int i = 0; i < queensNumber; i++) {
+            pieces.add(gamePiecesFactory.createPiece(Queen.class, Color.black, chessBoard));
+        }
 
         // print the message about game start
         System.out.println(String.format("Game has been started at: %s",

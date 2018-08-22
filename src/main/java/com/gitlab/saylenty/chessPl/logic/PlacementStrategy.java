@@ -2,7 +2,7 @@
   Saylenty on 11-Apr-17.
   Copyright (c) 2017
  */
-package com.gitlab.saylenty.chessPl.Logic;
+package com.gitlab.saylenty.chessPl.logic;
 
 @FunctionalInterface
 public interface PlacementStrategy {

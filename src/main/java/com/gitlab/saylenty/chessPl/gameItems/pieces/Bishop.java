@@ -2,9 +2,9 @@
   Saylenty on 11-Apr-17.
   Copyright (c) 2017
  */
-package com.gitlab.saylenty.chessPl.GameItems.Pieces;
+package com.gitlab.saylenty.chessPl.gameItems.pieces;
 
-import com.gitlab.saylenty.chessPl.Infrustucture.Space;
+import com.gitlab.saylenty.chessPl.gameItems.Space;
 
 import java.awt.*;
 

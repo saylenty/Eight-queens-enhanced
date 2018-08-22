@@ -4,10 +4,9 @@
   Copyright (c) 2017
   </p>
  */
-package com.gitlab.saylenty.chessPl.GameItems;
+package com.gitlab.saylenty.chessPl.gameItems;
 
-import com.gitlab.saylenty.chessPl.GameItems.Pieces.Piece;
-import com.gitlab.saylenty.chessPl.Infrustucture.Space;
+import com.gitlab.saylenty.chessPl.gameItems.pieces.Piece;
 import com.google.common.collect.Sets;
 import lombok.Getter;
 
