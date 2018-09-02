@@ -52,13 +52,13 @@ public class BFRecursiveStrategy implements PlacementStrategy {
                 continue;
             }
             // current piece doesn't take any other piece
-            board.addPiece(current);
+            board.add(current);
 
             // continue with another piece
             seed = recursiveStrategy(startIndex + 1, seed, solutionConsumer);
 
             // if another piece can't find its place on a board -> step back and move previous piece
-            board.removePiece(current);
+            board.remove(current);
         }
         return seed;
     }

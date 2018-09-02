@@ -11,9 +11,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.*;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * A chess game object (figure)
@@ -42,8 +41,15 @@ public abstract class Piece {
      * Current piece position
      */
     @Getter
-    @Setter
     Space position;
+
+    public void setPosition(Space position) {
+        if (!Objects.equals(this.position, position)) {
+            // clear capture zone because the figure location on the board is changed
+            this.captureZone.clear();
+        }
+        this.position = position;
+    }
 
     /**
      * A chess board the piece is associated with
@@ -58,33 +64,54 @@ public abstract class Piece {
     final Set<Space> captureZone;
 
     Piece(String name, Color color, Space position) {
+        this(name, color);
+        this.position = position;
+    }
+
+    Piece(String name, Color color) {
         this.name = name;
         this.color = color;
-        this.position = position;
         captureZone = new HashSet<>();
         colorPrinter = new ColorPrinter();
         colorName = color == null ? "" : colorPrinter.getColorName(color.getRGB());
     }
 
     /**
-     * Moves a figure to an other free position
+     * Moves a figure to another free position
      *
-     * @return indicates weather the moving was successful
+     * @return indicates whether the moving was successful
      */
     public boolean move() {
         if (iterator == null) {
-            iterator = chessBoard.getFreeSpaces().iterator();
+            iterator = getNextAppropriateMovePositions().iterator();
         }
         if (iterator.hasNext()) {
             // have new available position (space) to move
             setPosition(iterator.next());
-            // clear capture zone because of new piece place
-            captureZone.clear();
             return true;
         }
         // don't have any free position (space) to move
         iterator = null;
         return false;
+    }
+
+    /**
+     * Returns all possible spaces that this figure could move to
+     * but further than the furthest figure of the same type on the board
+     *
+     * @return Next possible locations at the board
+     */
+    private Stream<Space> getNextAppropriateMovePositions() {
+        Stream<Space> freeSpaces = chessBoard.getFreeSpaces().parallelStream();
+        if (chessBoard.isEmpty()) {
+            return freeSpaces;
+        } else {
+            Optional<Space> max = chessBoard.getBoardPieces().parallelStream()
+                    .filter(p -> p.getClass().equals(this.getClass()))
+                    .map(Piece::getPosition)
+                    .max(Space::compareTo);
+            return max.map(e -> freeSpaces.filter(space -> space.compareTo(e) > 0)).orElse(freeSpaces);
+        }
     }
 
     /**

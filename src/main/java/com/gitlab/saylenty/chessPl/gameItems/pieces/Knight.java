@@ -10,20 +10,16 @@ import java.awt.*;
 
 public class Knight extends Piece {
 
-    public Knight() {
-        this(null, new Space(0, 0));
+    public Knight(Color color) {
+        super("Knight", color);
     }
 
     public Knight(Color color, Space position) {
-        this("Knight", color, position);
+        super("Knight", color, position);
     }
 
     public Knight(String name, Color color, Space position) {
         super(name, color, position);
-    }
-
-    public Knight(Color color) {
-        this(color, new Space(0, 0));
     }
 
     @Override

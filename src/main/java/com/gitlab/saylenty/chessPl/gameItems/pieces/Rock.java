@@ -10,20 +10,16 @@ import java.awt.*;
 
 public class Rock extends Piece {
 
-    public Rock() {
-        this(null, new Space(0, 0));
+    public Rock(Color color) {
+        super("Rock", color);
     }
 
     public Rock(Color color, Space position) {
-        this("Rock", color, position);
+        super("Rock", color, position);
     }
 
     public Rock(String name, Color color, Space position) {
         super(name, color, position);
-    }
-
-    public Rock(Color color) {
-        this(color, new Space(0, 0));
     }
 
     @Override

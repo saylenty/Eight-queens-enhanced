@@ -12,24 +12,38 @@ import lombok.Getter;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
+
+    /**
+     * The height of the board
+     */
     @Getter
     private final int height;
 
+    /**
+     * The width of the board
+     */
     @Getter
     private final int width;
 
+    /**
+     * Associated figures
+     */
     @Getter
     private final Set<Piece> boardPieces;
 
+    /**
+     * All positions (coordinates) that the figures could move to
+     */
     private final Set<Space> boardSpaces;
 
     public ChessBoard(int height, int width) {
         this.width = width;
         this.height = height;
         boardPieces = new HashSet<>();
-        boardSpaces = new HashSet<>();
+        boardSpaces = new HashSet<>(width * height, 1);
     }
 
     /**
@@ -54,8 +68,9 @@ public class ChessBoard {
      * @return all spaces for this chessBoard instance
      */
     public Set<Space> getFreeSpaces() {
-        Set<Space> piecesCaptureZone = new HashSet<>((int) (width * height * .75));
-        boardPieces.stream().map(Piece::getCaptureZone).forEach(piecesCaptureZone::addAll);
+        Set<Space> piecesCaptureZone = boardPieces.stream()
+                .flatMap(piece -> piece.getCaptureZone().stream())
+                .collect(Collectors.toSet());
         return Sets.difference(this.getBoardSpaces(), piecesCaptureZone);
     }
 
@@ -65,7 +80,7 @@ public class ChessBoard {
      * @param piece a piece to associates with
      * @return whether association was successful or not
      */
-    public boolean addPiece(Piece piece) {
+    public boolean add(Piece piece) {
         return boardPieces.add(piece);
     }
 
@@ -75,7 +90,16 @@ public class ChessBoard {
      * @param piece a piece for removing
      * @return whether removing was successful or not
      */
-    public boolean removePiece(Piece piece) {
+    public boolean remove(Piece piece) {
         return boardPieces.remove(piece);
+    }
+
+    /**
+     * Checks whether chessBoard has association with any figure
+     *
+     * @return true if this chessBoard contains no elements, false otherwise
+     */
+    public boolean isEmpty() {
+        return boardPieces.isEmpty();
     }
 }
