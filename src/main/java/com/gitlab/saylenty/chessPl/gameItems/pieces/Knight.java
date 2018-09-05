@@ -6,8 +6,6 @@ package com.gitlab.saylenty.chessPl.gameItems.pieces;
 
 import com.gitlab.saylenty.chessPl.gameItems.Space;
 
-import java.awt.*;
-
 public class Knight extends Piece {
 
     public Knight(Color color) {

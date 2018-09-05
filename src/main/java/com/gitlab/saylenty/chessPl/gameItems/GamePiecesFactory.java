@@ -6,7 +6,6 @@ package com.gitlab.saylenty.chessPl.gameItems;
 
 import com.gitlab.saylenty.chessPl.gameItems.pieces.Piece;
 
-import java.awt.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -23,10 +22,10 @@ public class GamePiecesFactory {
      * @param board a board to associate the piece with
      * @return created piece
      */
-    public <T extends Piece> T createPiece(Class<T> clazz, Color color, ChessBoard board) {
+    public <T extends Piece> T createPiece(Class<T> clazz, Piece.Color color, ChessBoard board) {
         T t;
         try {
-            Constructor<T> constructor = clazz.getConstructor(Color.class);
+            Constructor<T> constructor = clazz.getConstructor(Piece.Color.class);
             t = constructor.newInstance(color);
             t.setChessBoard(board);
         } catch (InstantiationException | IllegalAccessException |

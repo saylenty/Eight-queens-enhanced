@@ -6,11 +6,9 @@ package com.gitlab.saylenty.chessPl.gameItems.pieces;
 
 import com.gitlab.saylenty.chessPl.gameItems.ChessBoard;
 import com.gitlab.saylenty.chessPl.gameItems.Space;
-import com.gitlab.saylenty.chessPl.utils.ColorPrinter;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.awt.*;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -19,18 +17,15 @@ import java.util.stream.Stream;
  */
 public abstract class Piece {
 
+    public enum Color {
+        WHITE, BLACK
+    }
+
     @Getter
     private final String name;
 
     @Getter
     private final Color color;
-
-    @Getter
-    private final String colorName;
-
-    @Getter
-    @Setter
-    private ColorPrinter colorPrinter;
 
     /**
      * ChessBoard free spaces iterator
@@ -78,8 +73,6 @@ public abstract class Piece {
         this.name = name;
         this.color = color;
         captureZone = new HashSet<>();
-        colorPrinter = new ColorPrinter();
-        colorName = color == null ? "" : colorPrinter.getColorName(color.getRGB());
     }
 
     /**
@@ -136,7 +129,7 @@ public abstract class Piece {
     @Override
     public String toString() {
         return String.format("%s{name='%s', position={x='%d', y='%d'}, color='%s'}", getClass().getSimpleName(),
-                getName(), position.getX(), position.getY(), colorName);
+                getName(), position.getX(), position.getY(), color);
     }
 
     /**

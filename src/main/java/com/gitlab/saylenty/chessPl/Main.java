@@ -11,40 +11,24 @@ import com.gitlab.saylenty.chessPl.logic.BFRecursiveStrategy;
 import com.gitlab.saylenty.chessPl.logic.ChessGame;
 import com.google.common.base.Stopwatch;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
 
     public static void main(String[] args) {
-        // create the ChessGame
-        ChessGame game = new ChessGame();
-
-        int queensNumber = 4;
-
-        // create the game board
-        ChessBoard chessBoard = new ChessBoard(queensNumber, queensNumber);
-
-        // create pieces and add them to the game board
-        ArrayList<Piece> pieces = new ArrayList<>(queensNumber);
-
-        GamePiecesFactory gamePiecesFactory = new GamePiecesFactory();
-        for (int i = 0; i < queensNumber; i++) {
-            pieces.add(gamePiecesFactory.createPiece(Queen.class, Color.black, chessBoard));
-        }
-
-        // print the message about game start
+        // print the message to indicate that the game has begun
         System.out.println(String.format("Game has been started at: %s",
                 LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))));
 
         // create timer
         Stopwatch timer = Stopwatch.createStarted();
 
-        int result = game.start(new BFRecursiveStrategy(chessBoard, pieces));
+        int result = complex();
 
         // stop the timer
         timer.stop();
@@ -56,5 +40,53 @@ public class Main {
         System.out.println(String.format("Elapsed time (ms): %d", timer.elapsed(TimeUnit.MILLISECONDS)));
 
         System.out.println(String.format("The result is: %d", result));
+    }
+
+    /**
+     * This is complex variant, using:
+     * Queens - 1
+     * Rock - 1
+     * Knight - 1
+     * Bishop - 1
+     * King - 2
+     * @return number of possible solutions, which is: 20_136_752
+     */
+    private static int complex(){
+        // create the ChessGame
+        ChessGame game = new ChessGame();
+
+        // create the game board
+        ChessBoard chessBoard = new ChessBoard(9, 6);
+        GamePiecesFactory gamePiecesFactory = new GamePiecesFactory();
+        // create pieces and add them to the game board
+        List<Piece> pieces = new LinkedList<>();
+        pieces.add(gamePiecesFactory.createPiece(Queen.class, Piece.Color.BLACK, chessBoard)); // one Queen
+        pieces.add(gamePiecesFactory.createPiece(Rock.class, Piece.Color.BLACK, chessBoard)); // one Rock
+        pieces.add(gamePiecesFactory.createPiece(Knight.class, Piece.Color.BLACK, chessBoard)); // one Knight
+        pieces.add(gamePiecesFactory.createPiece(Bishop.class, Piece.Color.BLACK, chessBoard)); // one Bishop
+        pieces.add(gamePiecesFactory.createPiece(King.class, Piece.Color.BLACK, chessBoard)); // first King
+        pieces.add(gamePiecesFactory.createPiece(King.class, Piece.Color.WHITE, chessBoard)); // second King
+
+        return game.start(new BFRecursiveStrategy(chessBoard, pieces));
+    }
+
+    /**
+     * This is a variant, using queens only:
+     * Queens - {@code queensNumber}
+     * @return number of possible solutions, on a board of [{@code boardHeight}, {@code boardWidth}]
+     */
+    private static int queens(int queensNumber, int boardHeight, int boardWidth){
+        // create the ChessGame
+        ChessGame game = new ChessGame();
+
+        // create the game board
+        ChessBoard chessBoard = new ChessBoard(boardHeight, boardWidth);
+        GamePiecesFactory gamePiecesFactory = new GamePiecesFactory();
+        // create pieces and add them to the game board
+        List<Piece> pieces = new LinkedList<>();
+        for (int i = 0; i < queensNumber; i++) {
+            pieces.add(gamePiecesFactory.createPiece(Queen.class, Piece.Color.BLACK, chessBoard));
+        }
+        return game.start(new BFRecursiveStrategy(chessBoard, pieces));
     }
 }
