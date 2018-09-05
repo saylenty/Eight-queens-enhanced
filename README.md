@@ -1,4 +1,4 @@
-chessPlacementIssue
+Eight-queens-enhanced
 ============================
 Algorithm solves the problem of the chess pieces placement on a chess board in a way they can't capture each other.
 This is a kind very well known puzzle [Eight queens](https://en.wikipedia.org/wiki/Eight_queens_puzzle) but **with other
@@ -10,7 +10,7 @@ The main idea of this algorithm is to try every possible combination of calculat
  answer(s) is found.
 _We focus on finding the number of possible placements._ This is a recursive algorithm with backtracking approach.
 
-Algorithm works like demonstrated below, but additional chess pieces available.
+Algorithm works like demonstrated below, but **additional chess pieces available**.
 
 ![Algorithm visualization](https://upload.wikimedia.org/wikipedia/commons/b/b0/8queensminconflict.gif)
 
@@ -21,10 +21,22 @@ Available solvers
 Available visualization
 ============================
 * Java implementation has a console output which indicates the number of possible combinations
+ and the placement of figures in each found solution
 
-Example
+Examples
 ============================
-We have the following pieces:
+Example 1
+---------------
+Simple (using queens() method inside Main.java file)
+* Figures
+  * Queens 4
+* ChessBoard 4x4
+__Results__: 2
+* Elapsed time (ms): 67
+
+Example 2
+---------------
+Complex (using complex() method inside Main.java file)
 * Figures
   * Black King
   * Black Queen
@@ -33,6 +45,7 @@ We have the following pieces:
   * Black Bishop
   * White King
 * ChessBoard [9x6]
+__Results__: 20136752
+* Elapsed time (ms): 48800
 
-__Results__:
-* Elapsed time (ms) 45433 <=> on Intel Core i7, 2.0Ghz, 16GB RAM
+__Machine__</a>: Intel Core i7, 2.0Ghz, 16GB RAM
