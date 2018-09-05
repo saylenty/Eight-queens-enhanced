@@ -43,12 +43,18 @@ public abstract class Piece {
     @Getter
     Space position;
 
+    /**
+     * Changes the figure position to new one and clears the capture zone in case new position is set
+     *
+     * @param position new potion to locate the figure
+     * @implNote if {@code position} equals current location nothing is done
+     */
     public void setPosition(Space position) {
         if (!Objects.equals(this.position, position)) {
+            this.position = position;
             // clear capture zone because the figure location on the board is changed
             this.captureZone.clear();
         }
-        this.position = position;
     }
 
     /**
@@ -102,16 +108,12 @@ public abstract class Piece {
      * @return Next possible locations at the board
      */
     private Stream<Space> getNextAppropriateMovePositions() {
-        Stream<Space> freeSpaces = chessBoard.getFreeSpaces().parallelStream();
-        if (chessBoard.isEmpty()) {
-            return freeSpaces;
-        } else {
-            Optional<Space> max = chessBoard.getBoardPieces().parallelStream()
-                    .filter(p -> p.getClass().equals(this.getClass()))
-                    .map(Piece::getPosition)
-                    .max(Space::compareTo);
-            return max.map(e -> freeSpaces.filter(space -> space.compareTo(e) > 0)).orElse(freeSpaces);
-        }
+        Stream<Space> freeZone = chessBoard.getFreeZone();
+        Optional<Space> max = chessBoard.getBoardPieces()
+                .filter(p -> p.getClass().equals(this.getClass()))
+                .map(Piece::getPosition)
+                .max(Space::compareTo);
+        return max.map(e -> freeZone.filter(space -> space.compareTo(e) > 0)).orElse(freeZone);
     }
 
     /**

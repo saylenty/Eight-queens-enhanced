@@ -13,6 +13,7 @@ import lombok.Getter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ChessBoard {
 
@@ -31,11 +32,14 @@ public class ChessBoard {
     /**
      * Associated figures
      */
-    @Getter
     private final Set<Piece> boardPieces;
 
+    public final Stream<? extends Piece> getBoardPieces() {
+        return boardPieces.stream();
+    }
+
     /**
-     * All positions (coordinates) that the figures could move to
+     * All positions (coordinates) that the figures could move to on this board instance
      */
     private final Set<Space> boardSpaces;
 
@@ -63,15 +67,22 @@ public class ChessBoard {
     }
 
     /**
-     * Calculates all free (that is not in any figure danger zone) board spaces
+     * Retrieves aggregated danger zone for all figures
      *
-     * @return all spaces for this chessBoard instance
+     * @return spaces that are in any figure danger zone of this chessBoard instance
      */
-    public Set<Space> getFreeSpaces() {
-        Set<Space> piecesCaptureZone = boardPieces.stream()
-                .flatMap(piece -> piece.getCaptureZone().stream())
-                .collect(Collectors.toSet());
-        return Sets.difference(this.getBoardSpaces(), piecesCaptureZone);
+    public Stream<Space> getCaptureZone() {
+        return boardPieces.stream().flatMap(s -> s.getCaptureZone().stream());
+    }
+
+    /**
+     * Retrieves free board spaces (that is not in any figure danger zone)
+     *
+     * @return free spaces for this chessBoard instance
+     */
+    public Stream<Space> getFreeZone() {
+        Set<Space> piecesCaptureZone = getCaptureZone().collect(Collectors.toSet());
+        return Sets.difference(this.getBoardSpaces(), piecesCaptureZone).stream();
     }
 
     /**

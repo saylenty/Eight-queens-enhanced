@@ -5,12 +5,13 @@
 package com.gitlab.saylenty.chessPl.logic;
 
 import com.gitlab.saylenty.chessPl.gameItems.ChessBoard;
-import com.gitlab.saylenty.chessPl.gameItems.pieces.Piece;
 import com.gitlab.saylenty.chessPl.gameItems.Space;
+import com.gitlab.saylenty.chessPl.gameItems.pieces.Piece;
 
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 /**
  * Recursive chess pieces placement strategy for the chess game
@@ -36,7 +37,7 @@ public class BFRecursiveStrategy implements PlacementStrategy {
         });
     }
 
-    private int recursiveStrategy(int startIndex, int seed, Consumer<Set<Piece>> solutionConsumer) {
+    private int recursiveStrategy(int startIndex, int seed, Consumer<Stream<? extends Piece>> solutionConsumer) {
         if (startIndex == pieces.size()) {
             // the last piece on it's place, yet another solution is found
             solutionConsumer.accept(board.getBoardPieces());
@@ -46,7 +47,7 @@ public class BFRecursiveStrategy implements PlacementStrategy {
 
         while (current.move()) {
             Set<Space> currentCaptureZone = current.getCaptureZone();
-            if (board.getBoardPieces().stream().map(Piece::getPosition)
+            if (board.getBoardPieces().map(Piece::getPosition)
                     .anyMatch(currentCaptureZone::contains)) {
                 // current takes the piece
                 continue;
