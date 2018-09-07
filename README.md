@@ -12,11 +12,11 @@ _We focus on finding the number of possible placements._ This is a recursive alg
 
 Algorithm works like demonstrated below, but **additional chess pieces available**.
 
-![Algorithm visualization](https://upload.wikimedia.org/wikipedia/commons/b/b0/8queensminconflict.gif)
+![Algorithm visualization](https://upload.wikimedia.org/wikipedia/commons/1/1f/Eight-queens-animation.gif)
 
 Available solvers
 ============================
-1. Java single-thread approach - uses brute force recursive algorithm
+1. Java single-thread approach - uses recursive backtracking algorithm
 
 Available visualization
 ============================
@@ -29,10 +29,10 @@ Example 1
 ---------------
 Simple (using queens() method inside Main.java file)
 * Figures
-  * Queens 4
-* ChessBoard 4x4
-__Results__: 2
-* Elapsed time (ms): 67
+  * Queens 8
+* ChessBoard 8x8
+* __Results__: 92
+* Elapsed time (ms): 1650
 
 Example 2
 ---------------
@@ -45,7 +45,7 @@ Complex (using complex() method inside Main.java file)
   * Black Bishop
   * White King
 * ChessBoard [9x6]
-__Results__: 20136752
+* __Results__: 20136752
 * Elapsed time (ms): 48800
 
 __Machine__</a>: Intel Core i7, 2.0Ghz, 16GB RAM
