@@ -5,6 +5,7 @@
 package com.gitlab.saylenty.chessPl.gameItems;
 
 import com.gitlab.saylenty.chessPl.gameItems.pieces.Piece;
+import lombok.extern.log4j.Log4j2;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -12,6 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Factory for pieces creation
  */
+@Log4j2
 public class GamePiecesFactory {
 
     /**
@@ -30,7 +32,7 @@ public class GamePiecesFactory {
             t.setChessBoard(board);
         } catch (InstantiationException | IllegalAccessException |
                 NoSuchMethodException | InvocationTargetException e) {
-            e.printStackTrace();
+            log.error(e);
             throw new RuntimeException(
                     String.format("Could not instantiate desired figure of %s class", clazz.getName()));
         }

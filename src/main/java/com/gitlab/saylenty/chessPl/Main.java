@@ -6,10 +6,16 @@ package com.gitlab.saylenty.chessPl;
 
 import com.gitlab.saylenty.chessPl.gameItems.ChessBoard;
 import com.gitlab.saylenty.chessPl.gameItems.GamePiecesFactory;
-import com.gitlab.saylenty.chessPl.gameItems.pieces.*;
+import com.gitlab.saylenty.chessPl.gameItems.pieces.Bishop;
+import com.gitlab.saylenty.chessPl.gameItems.pieces.King;
+import com.gitlab.saylenty.chessPl.gameItems.pieces.Knight;
+import com.gitlab.saylenty.chessPl.gameItems.pieces.Piece;
+import com.gitlab.saylenty.chessPl.gameItems.pieces.Queen;
+import com.gitlab.saylenty.chessPl.gameItems.pieces.Rock;
 import com.gitlab.saylenty.chessPl.logic.BFRecursiveStrategy;
 import com.gitlab.saylenty.chessPl.logic.ChessGame;
 import com.google.common.base.Stopwatch;
+import lombok.extern.log4j.Log4j2;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,12 +24,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@Log4j2
 public class Main {
 
     public static void main(String[] args) {
         // print the message to indicate that the game has begun
-        System.out.println(String.format("Game has been started at: %s",
-                LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))));
+        log.info("Game has been started at: {}",
+                LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)));
 
         // create timer
         Stopwatch timer = Stopwatch.createStarted();
@@ -34,12 +41,12 @@ public class Main {
         timer.stop();
 
         // print the message about game end
-        System.out.println(String.format("Game has been ended at: %s",
-                LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))));
+        log.info("Game has been ended at: {}",
+                LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)));
 
-        System.out.println(String.format("Elapsed time (ms): %d", timer.elapsed(TimeUnit.MILLISECONDS)));
+        log.info("Elapsed time (ms): {}", timer.elapsed(TimeUnit.MILLISECONDS));
 
-        System.out.println(String.format("The result is: %d", result));
+        log.info("The result is: {}", result);
     }
 
     /**
