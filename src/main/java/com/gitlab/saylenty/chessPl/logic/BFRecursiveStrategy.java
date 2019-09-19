@@ -29,8 +29,8 @@ public class BFRecursiveStrategy implements PlacementStrategy {
         // calculate the number of figures possible combinations
         return recursiveStrategy(0, 0, set -> {
             // print result
-            set.forEach(System.out::println);
-            System.out.println();
+            //set.forEach(System.out::println);
+            //System.out.println();
         });
     }
 

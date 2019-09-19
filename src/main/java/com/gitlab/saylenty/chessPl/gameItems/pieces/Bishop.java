@@ -5,26 +5,19 @@
 package com.gitlab.saylenty.chessPl.gameItems.pieces;
 
 import com.gitlab.saylenty.chessPl.gameItems.Space;
+import com.gitlab.saylenty.chessPl.gameItems.generator.BiDiagonalGenerator;
 
 public class Bishop extends Piece {
 
     public Bishop(Color color) {
-        super("Bishop", color);
+        super(new BiDiagonalGenerator(), "Bishop", color);
     }
 
     public Bishop(Color color, Space position) {
-        super("Bishop", color, position);
+        super("Bishop", color, new BiDiagonalGenerator(), position);
     }
 
     public Bishop(String name, Color color, Space position) {
-        super(name, color, position);
-    }
-
-    @Override
-    protected void computeCaptureZone() {
-        upLeftDiagonal();
-        downRightDiagonal();
-        upRightDiagonal();
-        bottomLeftDiagonal();
+        super(name, color, new BiDiagonalGenerator(), position);
     }
 }

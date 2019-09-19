@@ -6,10 +6,12 @@ package com.gitlab.saylenty.chessPl.gameItems.pieces;
 
 import com.gitlab.saylenty.chessPl.gameItems.ChessBoard;
 import com.gitlab.saylenty.chessPl.gameItems.Space;
+import com.gitlab.saylenty.chessPl.gameItems.generator.RangeGenerationStrategy;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -20,6 +22,8 @@ public abstract class Piece {
     public enum Color {
         WHITE, BLACK
     }
+
+    final RangeGenerationStrategy captureZoneGenerator;
 
     @Getter
     private final String name;
@@ -62,14 +66,15 @@ public abstract class Piece {
     /**
      * A piece captureZone
      */
-    final Set<Space> captureZone;
+    Set<Space> captureZone;
 
-    Piece(String name, Color color, Space position) {
-        this(name, color);
+    Piece(String name, Color color, RangeGenerationStrategy captureZoneGenerator, Space position) {
+        this(captureZoneGenerator, name, color);
         this.position = position;
     }
 
-    Piece(String name, Color color) {
+    Piece(RangeGenerationStrategy captureZoneGenerator, String name, Color color) {
+        this.captureZoneGenerator = captureZoneGenerator;
         this.name = name;
         this.color = color;
         captureZone = new HashSet<>();
@@ -115,8 +120,8 @@ public abstract class Piece {
     public Set<Space> getCaptureZone() {
         if (captureZone.isEmpty()) {
             // add current position as initial
-            captureZone.add(this.getPosition());
             computeCaptureZone();
+            captureZone.add(this.getPosition());
         }
         return captureZone;
     }
@@ -124,193 +129,14 @@ public abstract class Piece {
     /**
      * Calculates take zone for the piece based on it's current location on the board
      */
-    protected abstract void computeCaptureZone();
+    protected void computeCaptureZone() {
+        captureZone = captureZoneGenerator.generate(this.position, this.chessBoard.getHeight(),
+                this.chessBoard.getWidth()).collect(Collectors.toSet());
+    }
 
     @Override
     public String toString() {
         return String.format("%s{name='%s', position={x='%d', y='%d'}, color='%s'}", getClass().getSimpleName(),
                 getName(), position.getX(), position.getY(), color);
-    }
-
-    /**
-     * Updates the piece captureZone with all positions that are above
-     */
-    final void up() {
-        up(-1);
-    }
-
-    /**
-     * Updates the piece captureZone with positions that are above or until limit is exceeded
-     *
-     * @param limit number of max points from the current piece position
-     *              See also {@link #up()}.
-     */
-    final void up(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        while (--y >= 0 && limit-- != 0) {
-            Space p = new Space(x, y);
-            captureZone.add(p);
-        }
-    }
-
-    /**
-     * Updates the piece captureZone with all positions that are below
-     */
-    final void down() {
-        down(-1);
-    }
-
-    /**
-     * Updates the piece captureZone with positions that are below or until limit is exceeded
-     *
-     * @param limit number of max points from the current piece position
-     *              See also {@link #down()}.
-     */
-    final void down(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        int chessBoardHeight = this.chessBoard.getHeight();
-        while (++y < chessBoardHeight && limit-- != 0) {
-            Space p = new Space(x, y);
-            captureZone.add(p);
-        }
-    }
-
-    /**
-     * Updates the piece captureZone with all positions that are on the left
-     */
-    final void left() {
-        left(-1);
-    }
-
-    /**
-     * Updates the piece captureZone with positions that are on the left or until limit is exceeded
-     *
-     * @param limit number of max points from the current piece position
-     *              See also {@link #left()}.
-     */
-    final void left(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        while (--x >= 0 && limit-- != 0) {
-            Space p = new Space(x, y);
-            captureZone.add(p);
-        }
-    }
-
-    /**
-     * Updates the captureZone of shapes with all the positions that are on the right
-     */
-    final void right() {
-        right(-1);
-    }
-
-    /**
-     * Updates the piece captureZone with positions that are on the right or until limit is exceeded
-     *
-     * @param limit number of max points from the current piece position
-     *              See also {@link #right()}.
-     */
-    final void right(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        int chessBoardWidth = this.chessBoard.getWidth();
-        while (++x < chessBoardWidth && limit-- != 0) {
-            Space p = new Space(x, y);
-            captureZone.add(p);
-        }
-    }
-
-    /**
-     * Updates the captureZone of shapes with all the positions that are on the up left diagonal
-     */
-    final void upLeftDiagonal() {
-        upLeftDiagonal(-1);
-    }
-
-    /**
-     * Updates the piece captureZone with positions that are on the up left diagonal or until limit is exceeded
-     *
-     * @param limit number of max points from the current piece position
-     *              See also {@link #upLeftDiagonal()}.
-     */
-    final void upLeftDiagonal(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        while (--x >= 0 && --y >= 0 && limit-- != 0) {
-            Space p = new Space(x, y);
-            captureZone.add(p);
-        }
-    }
-
-    /**
-     * Updates the captureZone of shapes with all the positions that are on the up right diagonal
-     */
-    final void upRightDiagonal() {
-        upRightDiagonal(-1);
-    }
-
-    /**
-     * Updates the piece captureZone with positions that are on the up right diagonal or until limit is exceeded
-     *
-     * @param limit number of max points from the current piece position
-     *              See also {@link #upRightDiagonal()}.
-     */
-    final void upRightDiagonal(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        int chessBoardWidth = this.chessBoard.getWidth();
-        while (++x < chessBoardWidth && --y >= 0 && limit-- != 0) {
-            Space p = new Space(x, y);
-            captureZone.add(p);
-        }
-    }
-
-    /**
-     * Updates the captureZone of shapes with all the positions that are on the down left diagonal
-     */
-    final void bottomLeftDiagonal() {
-        bottomLeftDiagonal(-1);
-    }
-
-    /**
-     * Updates the piece captureZone with positions that are on the down left diagonal or until limit is exceeded
-     *
-     * @param limit number of max points from the current piece position
-     *              See also {@link #bottomLeftDiagonal()}.
-     */
-    final void bottomLeftDiagonal(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        int chessBoardHeight = this.chessBoard.getHeight();
-        while (--x >= 0 && ++y < chessBoardHeight && limit-- != 0) {
-            Space p = new Space(x, y);
-            captureZone.add(p);
-        }
-    }
-
-    /**
-     * Updates the captureZone of shapes with all the positions that are on the down right diagonal
-     */
-    final void downRightDiagonal() {
-        downRightDiagonal(-1);
-    }
-
-    /**
-     * Updates the piece captureZone with positions that are on the down right diagonal or until limit is exceeded
-     *
-     * @param limit number of max points from the current piece position
-     *              See also {@link #downRightDiagonal()}.
-     */
-    final void downRightDiagonal(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        int chessBoardWidth = this.chessBoard.getWidth();
-        int chessBoardHeight = this.chessBoard.getHeight();
-        while (++x < chessBoardWidth && ++y < chessBoardHeight && limit-- != 0) {
-            Space p = new Space(x, y);
-            captureZone.add(p);
-        }
     }
 }

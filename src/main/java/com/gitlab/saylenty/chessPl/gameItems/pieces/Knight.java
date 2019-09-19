@@ -9,15 +9,15 @@ import com.gitlab.saylenty.chessPl.gameItems.Space;
 public class Knight extends Piece {
 
     public Knight(Color color) {
-        super("Knight", color);
+        super(null, "Knight", color);
     }
 
     public Knight(Color color, Space position) {
-        super("Knight", color, position);
+        super("Knight", color, null, position);
     }
 
     public Knight(String name, Color color, Space position) {
-        super(name, color, position);
+        super(name, color, null, position);
     }
 
     @Override
@@ -31,16 +31,17 @@ public class Knight extends Piece {
         left(x, y, chessBoardHeight);
         bottom(x, y, chessBoardHeight, chessBoardWidth);
         right(x, y, chessBoardHeight, chessBoardWidth);
+        captureZone.add(this.getPosition());
     }
 
     private void up(int x, int y) {
         y -= 2;
         if (y >= 0) {
             int a = x - 1;
-            int b = x + 1;
             if (a >= 0) {
                 captureZone.add(new Space(a, y));
             }
+            int b = x + 1;
             if (b >= 0) {
                 captureZone.add(new Space(b, y));
             }
@@ -51,10 +52,10 @@ public class Knight extends Piece {
         y += 2;
         if (y < chessBoardHeight) {
             int a = x - 1;
-            int b = x + 1;
             if (a >= 0) {
                 captureZone.add(new Space(a, y));
             }
+            int b = x + 1;
             if (b < chessBoardWidth) {
                 captureZone.add(new Space(b, y));
             }
@@ -65,10 +66,10 @@ public class Knight extends Piece {
         x -= 2;
         if (x >= 0) {
             int a = y - 1;
-            int b = y + 1;
             if (a >= 0) {
                 captureZone.add(new Space(x, a));
             }
+            int b = y + 1;
             if (b < chessBoardHeight) {
                 captureZone.add(new Space(x, b));
             }
@@ -79,10 +80,10 @@ public class Knight extends Piece {
         x += 2;
         if (x < chessBoardWidth) {
             int a = y + 1;
-            int b = y - 1;
             if (a < chessBoardHeight) {
                 captureZone.add(new Space(x, a));
             }
+            int b = y - 1;
             if (b >= 0) {
                 captureZone.add(new Space(x, b));
             }
