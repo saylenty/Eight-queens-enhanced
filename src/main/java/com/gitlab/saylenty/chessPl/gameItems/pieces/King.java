@@ -14,20 +14,25 @@ import java.util.stream.Collectors;
 public class King extends Piece {
 
     public King(Color color) {
-        super(new CompositeGenerator(new BiDiagonalGenerator(), new BiStraightLineGenerator()), "King", color);
+        super(createCaptureZoneGenerator(), "King", color);
     }
 
     public King(Color color, Space position) {
-        super("King", color, new CompositeGenerator(new BiDiagonalGenerator(), new BiStraightLineGenerator()), position);
+        super("King", color, createCaptureZoneGenerator(), position);
     }
 
     public King(String name, Color color, Space position) {
-        super(name, color, new CompositeGenerator(new BiDiagonalGenerator(), new BiStraightLineGenerator()), position);
+        super(name, color, createCaptureZoneGenerator(), position);
+    }
+
+    private static CompositeGenerator createCaptureZoneGenerator() {
+        return new CompositeGenerator(new BiDiagonalGenerator(1),
+                new BiStraightLineGenerator(1));
     }
 
     @Override
     protected void computeCaptureZone() {
         captureZone = captureZoneGenerator.generate(this.position, this.chessBoard.getHeight(),
-                this.chessBoard.getWidth(), 1).collect(Collectors.toSet());
+                this.chessBoard.getWidth()).collect(Collectors.toSet());
     }
 }

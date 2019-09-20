@@ -14,8 +14,8 @@ public class CompositeGenerator implements RangeGenerationStrategy {
     }
 
     @Override
-    public Stream<Space> generate(Space location, int boardHeight, int boardWidth, int limit) {
+    public Stream<Space> generate(Space location, int boardHeight, int boardWidth) {
         return Arrays.stream(strategies)
-                .flatMap(strategy -> strategy.generate(location, boardHeight, boardWidth, limit));
+                .flatMap(strategy -> strategy.generate(location, boardHeight, boardWidth));
     }
 }

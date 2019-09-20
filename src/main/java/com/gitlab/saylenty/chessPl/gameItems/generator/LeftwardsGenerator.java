@@ -2,25 +2,30 @@ package com.gitlab.saylenty.chessPl.gameItems.generator;
 
 import com.gitlab.saylenty.chessPl.gameItems.Space;
 
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class LeftwardsGenerator implements RangeGenerationStrategy {
+public class LeftwardsGenerator extends AbstractRangeGenerationStrategy {
+
+    @SuppressWarnings("WeakerAccess")
+    public LeftwardsGenerator(long limit) {
+        super(limit);
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public LeftwardsGenerator() {
+    }
 
     /**
-     * Updates the piece captureZone with positions that are on the left or until limit is exceeded
-     *
-     * @param limit number of max points from the current piece position
-     *              See also {@link #generate(Space, int, int)} ()}.
+     * Generates the piece captureZone with positions that are on the left
      */
     @Override
-    public Stream<Space> generate(Space location, int boardHeight, int boardWidth, int limit) {
+    public Stream<Space> generateUnlimited(Space location, int boardHeight, int boardWidth) {
         int x = location.getX();
         int y = location.getY();
-        Stream.Builder<Space> streamBuilder = Stream.builder();
-        while (--x >= 0 && limit-- != 0) {
-            Space p = new Space(x, y);
-            streamBuilder.add(p);
-        }
-        return streamBuilder.build();
+
+        return IntStream.iterate(x -1, x1 -> x1 - 1)
+                .limit(x + 1)
+                .mapToObj(x1 -> new Space(x1, y));
     }
 }

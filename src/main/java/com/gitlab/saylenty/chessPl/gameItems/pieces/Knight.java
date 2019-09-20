@@ -31,7 +31,6 @@ public class Knight extends Piece {
         left(x, y, chessBoardHeight);
         bottom(x, y, chessBoardHeight, chessBoardWidth);
         right(x, y, chessBoardHeight, chessBoardWidth);
-        captureZone.add(this.getPosition());
     }
 
     private void up(int x, int y) {

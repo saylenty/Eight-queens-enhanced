@@ -12,14 +12,18 @@ import com.gitlab.saylenty.chessPl.gameItems.generator.CompositeGenerator;
 public class Queen extends Piece {
 
     public Queen(Color color) {
-        super(new CompositeGenerator(new BiDiagonalGenerator(), new BiStraightLineGenerator()), "Queen", color);
+        super(createCaptureZoneGenerator(), "Queen", color);
     }
 
     public Queen(Color color, Space position) {
-        super("Queen", color, new CompositeGenerator(new BiDiagonalGenerator(), new BiStraightLineGenerator()), position);
+        super("Queen", color, createCaptureZoneGenerator(), position);
     }
 
     public Queen(String name, Color color, Space position) {
-        super(name, color, new CompositeGenerator(new BiDiagonalGenerator(), new BiStraightLineGenerator()), position);
+        super(name, color, createCaptureZoneGenerator(), position);
+    }
+
+    private static CompositeGenerator createCaptureZoneGenerator() {
+        return new CompositeGenerator(new BiDiagonalGenerator(), new BiStraightLineGenerator());
     }
 }

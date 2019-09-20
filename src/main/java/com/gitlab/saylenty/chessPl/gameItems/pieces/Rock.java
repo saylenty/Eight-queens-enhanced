@@ -10,14 +10,18 @@ import com.gitlab.saylenty.chessPl.gameItems.generator.BiStraightLineGenerator;
 public class Rock extends Piece {
 
     public Rock(Color color) {
-        super(new BiStraightLineGenerator(), "Rock", color);
+        super(createCaptureZoneGenerator(), "Rock", color);
     }
 
     public Rock(Color color, Space position) {
-        super("Rock", color, new BiStraightLineGenerator(), position);
+        super("Rock", color, createCaptureZoneGenerator(), position);
     }
 
     public Rock(String name, Color color, Space position) {
-        super(name, color, new BiStraightLineGenerator(), position);
+        super(name, color, createCaptureZoneGenerator(), position);
+    }
+
+    private static BiStraightLineGenerator createCaptureZoneGenerator() {
+        return new BiStraightLineGenerator();
     }
 }

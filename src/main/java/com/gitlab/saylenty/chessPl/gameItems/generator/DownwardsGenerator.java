@@ -2,25 +2,27 @@ package com.gitlab.saylenty.chessPl.gameItems.generator;
 
 import com.gitlab.saylenty.chessPl.gameItems.Space;
 
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class DownwardsGenerator implements RangeGenerationStrategy {
+public class DownwardsGenerator extends AbstractRangeGenerationStrategy {
+
+    @SuppressWarnings("WeakerAccess")
+    public DownwardsGenerator() {
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public DownwardsGenerator(long limit) {
+        super(limit);
+    }
 
     /**
-     * Updates the piece captureZone with positions that are below or until limit is exceeded
-     *
-     * @param limit number of max points from the current piece position
-     *              See also {@link #generate(Space, int, int)} ()}.
+     * Generates the piece captureZone with positions that are below
      */
     @Override
-    public Stream<Space> generate(Space location, int boardHeight, int boardWidth, int limit) {
+    public Stream<Space> generateUnlimited(Space location, int boardHeight, int boardWidth) {
         int x = location.getX();
         int y = location.getY();
-        Stream.Builder<Space> streamBuilder = Stream.builder();
-        while (++y < boardHeight && limit-- != 0) {
-            Space p = new Space(x, y);
-            streamBuilder.add(p);
-        }
-        return streamBuilder.build();
+        return IntStream.range(y + 1, boardHeight).mapToObj(y1 -> new Space(x, y1));
     }
 }
