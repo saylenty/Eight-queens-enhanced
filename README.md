@@ -46,6 +46,6 @@ Complex (using complex() method inside Main.java file)
   * White King
 * ChessBoard [9x6]
 * __Results__: 20136752
-* Elapsed time (ms): 48800
+* Elapsed time (ms): 38800
 
 __Machine__</a>: Intel Core i7, 2.0Ghz, 16GB RAM
