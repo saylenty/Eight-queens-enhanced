@@ -4,7 +4,7 @@
  */
 package com.gitlab.saylenty.chessPl.gameItems.pieces;
 
-import com.gitlab.saylenty.chessPl.gameItems.Space;
+import com.gitlab.saylenty.chessPl.gameItems.BoardSquare;
 
 public class Rock extends Piece {
 
@@ -12,11 +12,11 @@ public class Rock extends Piece {
         super("Rock", color);
     }
 
-    public Rock(Color color, Space position) {
+    public Rock(Color color, BoardSquare position) {
         super("Rock", color, position);
     }
 
-    public Rock(String name, Color color, Space position) {
+    public Rock(String name, Color color, BoardSquare position) {
         super(name, color, position);
     }
 

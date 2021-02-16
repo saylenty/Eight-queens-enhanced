@@ -5,7 +5,7 @@
 package com.gitlab.saylenty.chessPl.gameItems.pieces;
 
 import com.gitlab.saylenty.chessPl.gameItems.ChessBoard;
-import com.gitlab.saylenty.chessPl.gameItems.Space;
+import com.gitlab.saylenty.chessPl.gameItems.BoardSquare;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,13 +30,13 @@ public abstract class Piece {
     /**
      * ChessBoard free spaces iterator
      */
-    private Iterator<Space> iterator;
+    private Iterator<BoardSquare> iterator;
 
     /**
      * Current piece position
      */
     @Getter
-    Space position;
+    BoardSquare position;
 
     /**
      * Changes the figure position to new one and clears the capture zone in case new position is set
@@ -44,7 +44,7 @@ public abstract class Piece {
      * @param position new potion to locate the figure
      * @implNote if {@code position} equals current location nothing is done
      */
-    public void setPosition(Space position) {
+    public void setPosition(BoardSquare position) {
         if (!Objects.equals(this.position, position)) {
             this.position = position;
             // clear capture zone because the figure location on the board is changed
@@ -62,9 +62,9 @@ public abstract class Piece {
     /**
      * A piece captureZone
      */
-    final Set<Space> captureZone;
+    final List<BoardSquare> captureZone;
 
-    Piece(String name, Color color, Space position) {
+    Piece(String name, Color color, BoardSquare position) {
         this(name, color);
         this.position = position;
     }
@@ -72,7 +72,7 @@ public abstract class Piece {
     Piece(String name, Color color) {
         this.name = name;
         this.color = color;
-        captureZone = new HashSet<>();
+        captureZone = new ArrayList<>();
     }
 
     /**
@@ -100,19 +100,19 @@ public abstract class Piece {
      *
      * @return Next possible locations at the board
      */
-    private Stream<Space> getNextAppropriateMovePositions() {
-        Stream<Space> freeZone = chessBoard.getFreeZone();
-        Optional<Space> max = chessBoard.getBoardPieces()
+    private Stream<BoardSquare> getNextAppropriateMovePositions() {
+        Stream<BoardSquare> freeZone = chessBoard.getFreeZone();
+        Optional<BoardSquare> max = chessBoard.getBoardPieces()
                 .filter(p -> p.getClass().equals(this.getClass()))
                 .map(Piece::getPosition)
-                .max(Space::compareTo);
+                .max(BoardSquare::compareTo);
         return max.map(e -> freeZone.filter(space -> space.compareTo(e) > 0)).orElse(freeZone);
     }
 
     /**
      * @return kill zone of the piece
      */
-    public Set<Space> getCaptureZone() {
+    public List<BoardSquare> getCaptureZone() {
         if (captureZone.isEmpty()) {
             // add current position as initial
             captureZone.add(this.getPosition());
@@ -149,7 +149,7 @@ public abstract class Piece {
         int x = position.getX();
         int y = position.getY();
         while (--y >= 0 && limit-- != 0) {
-            Space p = new Space(x, y);
+            BoardSquare p = new BoardSquare(x, y);
             captureZone.add(p);
         }
     }
@@ -172,7 +172,7 @@ public abstract class Piece {
         int y = position.getY();
         int chessBoardHeight = this.chessBoard.getHeight();
         while (++y < chessBoardHeight && limit-- != 0) {
-            Space p = new Space(x, y);
+            BoardSquare p = new BoardSquare(x, y);
             captureZone.add(p);
         }
     }
@@ -194,7 +194,7 @@ public abstract class Piece {
         int x = position.getX();
         int y = position.getY();
         while (--x >= 0 && limit-- != 0) {
-            Space p = new Space(x, y);
+            BoardSquare p = new BoardSquare(x, y);
             captureZone.add(p);
         }
     }
@@ -217,7 +217,7 @@ public abstract class Piece {
         int y = position.getY();
         int chessBoardWidth = this.chessBoard.getWidth();
         while (++x < chessBoardWidth && limit-- != 0) {
-            Space p = new Space(x, y);
+            BoardSquare p = new BoardSquare(x, y);
             captureZone.add(p);
         }
     }
@@ -239,7 +239,7 @@ public abstract class Piece {
         int x = position.getX();
         int y = position.getY();
         while (--x >= 0 && --y >= 0 && limit-- != 0) {
-            Space p = new Space(x, y);
+            BoardSquare p = new BoardSquare(x, y);
             captureZone.add(p);
         }
     }
@@ -262,7 +262,7 @@ public abstract class Piece {
         int y = position.getY();
         int chessBoardWidth = this.chessBoard.getWidth();
         while (++x < chessBoardWidth && --y >= 0 && limit-- != 0) {
-            Space p = new Space(x, y);
+            BoardSquare p = new BoardSquare(x, y);
             captureZone.add(p);
         }
     }
@@ -285,7 +285,7 @@ public abstract class Piece {
         int y = position.getY();
         int chessBoardHeight = this.chessBoard.getHeight();
         while (--x >= 0 && ++y < chessBoardHeight && limit-- != 0) {
-            Space p = new Space(x, y);
+            BoardSquare p = new BoardSquare(x, y);
             captureZone.add(p);
         }
     }
@@ -309,7 +309,7 @@ public abstract class Piece {
         int chessBoardWidth = this.chessBoard.getWidth();
         int chessBoardHeight = this.chessBoard.getHeight();
         while (++x < chessBoardWidth && ++y < chessBoardHeight && limit-- != 0) {
-            Space p = new Space(x, y);
+            BoardSquare p = new BoardSquare(x, y);
             captureZone.add(p);
         }
     }

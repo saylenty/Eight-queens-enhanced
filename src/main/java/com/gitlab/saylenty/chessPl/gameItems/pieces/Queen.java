@@ -4,7 +4,7 @@
  */
 package com.gitlab.saylenty.chessPl.gameItems.pieces;
 
-import com.gitlab.saylenty.chessPl.gameItems.Space;
+import com.gitlab.saylenty.chessPl.gameItems.BoardSquare;
 
 public class Queen extends Piece {
 
@@ -12,11 +12,11 @@ public class Queen extends Piece {
         super("Queen", color);
     }
 
-    public Queen(Color color, Space position) {
+    public Queen(Color color, BoardSquare position) {
         super("Queen", color, position);
     }
 
-    public Queen(String name, Color color, Space position) {
+    public Queen(String name, Color color, BoardSquare position) {
         super(name, color, position);
     }
 

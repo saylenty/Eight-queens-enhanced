@@ -10,7 +10,9 @@ import com.gitlab.saylenty.chessPl.gameItems.pieces.Piece;
 import com.google.common.collect.Sets;
 import lombok.Getter;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -41,13 +43,23 @@ public class ChessBoard {
     /**
      * All positions (coordinates) that the figures could move to on this board instance
      */
-    private final Set<Space> boardSpaces;
+    private final Map<Integer, Map<Integer, BoardSquare>> boardSquares;
 
     public ChessBoard(int height, int width) {
         this.width = width;
         this.height = height;
         boardPieces = new HashSet<>();
-        boardSpaces = new HashSet<>(width * height, 1);
+        boardSquares = new HashMap<>(width, 1);
+    }
+
+    private void initBoardSquares(int height, int width) {
+        for (int i = 0; i < width; i++) {
+            HashMap<Integer, BoardSquare> iValue = new HashMap<>(height, 1);
+            for (int j = 0; j < height; j++) {
+                iValue.put(j, new BoardSquare(i, j));
+            }
+            boardSquares.put(i, iValue);
+        }
     }
 
     /**
@@ -55,15 +67,13 @@ public class ChessBoard {
      *
      * @return all spaces for this chessBoard instance
      */
-    public Set<Space> getBoardSpaces() {
-        if (boardSpaces.isEmpty()) {
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    boardSpaces.add(new Space(x, y));
-                }
-            }
+    public Set<BoardSquare> getBoardSquares() {
+        if (boardSquares.isEmpty()) {
+            initBoardSquares(height, width);
         }
-        return boardSpaces;
+        return boardSquares.values().stream()
+                .flatMap(e -> e.values().stream())
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -71,8 +81,8 @@ public class ChessBoard {
      *
      * @return spaces that are in any figure danger zone of this chessBoard instance
      */
-    public Stream<Space> getCaptureZone() {
-        return boardPieces.stream().flatMap(s -> s.getCaptureZone().stream());
+    public Stream<BoardSquare> getCaptureZone() {
+        return getBoardSquares().stream().filter(BoardSquare::isLocked);
     }
 
     /**
@@ -80,9 +90,8 @@ public class ChessBoard {
      *
      * @return free spaces for this chessBoard instance
      */
-    public Stream<Space> getFreeZone() {
-        Set<Space> piecesCaptureZone = getCaptureZone().collect(Collectors.toSet());
-        return Sets.difference(this.getBoardSpaces(), piecesCaptureZone).stream();
+    public Stream<BoardSquare> getFreeZone() {
+        return getBoardSquares().stream().filter(BoardSquare::isUnlocked);
     }
 
     /**
@@ -92,7 +101,13 @@ public class ChessBoard {
      * @return whether association was successful or not
      */
     public boolean add(Piece piece) {
-        return boardPieces.add(piece);
+        boolean isAdded = boardPieces.add(piece);
+        for (BoardSquare space : piece.getCaptureZone()) {
+            boardSquares.get(space.getX())
+                    .get(space.getY())
+                    .lock();
+        }
+        return isAdded;
     }
 
     /**
@@ -102,7 +117,13 @@ public class ChessBoard {
      * @return whether removing was successful or not
      */
     public boolean remove(Piece piece) {
-        return boardPieces.remove(piece);
+        boolean isRemoved = boardPieces.remove(piece);
+        for (BoardSquare space : piece.getCaptureZone()) {
+            boardSquares.get(space.getX())
+                    .get(space.getY())
+                    .unlock();
+        }
+        return isRemoved;
     }
 
     /**
