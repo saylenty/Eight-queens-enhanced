@@ -32,7 +32,7 @@ Simple (using queens() method inside Main.java file)
   * Queens 8
 * ChessBoard 8x8
 * __Results__: 92
-* Elapsed time (ms): 1650
+* Elapsed time (ms): 905
 
 Example 2
 ---------------
