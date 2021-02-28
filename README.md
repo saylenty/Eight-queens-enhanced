@@ -32,7 +32,7 @@ Simple (using queens() method inside Main.java file)
   * Queens 8
 * ChessBoard 8x8
 * __Results__: 92
-* Elapsed time (ms): 905
+* Elapsed time (ms): 840
 
 Example 2
 ---------------
@@ -46,6 +46,6 @@ Complex (using complex() method inside Main.java file)
   * White King
 * ChessBoard [9x6]
 * __Results__: 20136752
-* Elapsed time (ms): 38800
+* Elapsed time (ms): 30800
 
 __Machine__</a>: Intel Core i7, 2.0Ghz, 16GB RAM

@@ -117,13 +117,16 @@ public class ChessBoard {
      * @return whether removing was successful or not
      */
     public boolean remove(Piece piece) {
-        boolean isRemoved = boardPieces.remove(piece);
+        return boardPieces.remove(piece) && clearCaptureZoneForPiece(piece);
+    }
+
+    private boolean clearCaptureZoneForPiece(Piece piece) {
         for (BoardSquare space : piece.getCaptureZone()) {
             boardSquares.get(space.getX())
                     .get(space.getY())
                     .unlock();
         }
-        return isRemoved;
+        return true;
     }
 
     /**

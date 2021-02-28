@@ -62,17 +62,17 @@ public abstract class Piece {
     /**
      * A piece captureZone
      */
-    final List<BoardSquare> captureZone;
-
-    Piece(String name, Color color, BoardSquare position) {
-        this(name, color);
-        this.position = position;
-    }
+    final Set<BoardSquare> captureZone;
 
     Piece(String name, Color color) {
         this.name = name;
         this.color = color;
-        captureZone = new ArrayList<>();
+        captureZone = new HashSet<>();
+    }
+
+    Piece(String name, Color color, BoardSquare position) {
+        this(name, color);
+        this.position = position;
     }
 
     /**
@@ -112,7 +112,7 @@ public abstract class Piece {
     /**
      * @return kill zone of the piece
      */
-    public List<BoardSquare> getCaptureZone() {
+    public Set<BoardSquare> getCaptureZone() {
         if (captureZone.isEmpty()) {
             // add current position as initial
             captureZone.add(this.getPosition());

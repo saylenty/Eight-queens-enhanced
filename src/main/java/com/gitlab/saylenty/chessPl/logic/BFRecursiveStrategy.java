@@ -44,7 +44,7 @@ public class BFRecursiveStrategy implements PlacementStrategy {
         Piece current = pieces.get(startIndex);
 
         while (current.move()) {
-            List<BoardSquare> currentCaptureZone = current.getCaptureZone();
+            Set<BoardSquare> currentCaptureZone = current.getCaptureZone();
             if (board.getBoardPieces().map(Piece::getPosition)
                     .anyMatch(currentCaptureZone::contains)) {
                 // current takes the piece
