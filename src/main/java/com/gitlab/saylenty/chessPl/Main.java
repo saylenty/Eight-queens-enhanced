@@ -35,7 +35,7 @@ public class Main {
         // create timer
         Stopwatch timer = Stopwatch.createStarted();
 
-        int result = complex();
+        int result = complexParallel();
 
         // stop the timer
         timer.stop();
@@ -75,6 +75,25 @@ public class Main {
         pieces.add(gamePiecesFactory.createPiece(King.class, Piece.Color.WHITE, chessBoard)); // second King
 
         return game.start(new BFRecursiveStrategy(chessBoard, pieces));
+    }
+
+    /**
+     * The same set of pieces as {@link #complex()}, but processed in parallel.
+     */
+    private static int complexParallel(){
+        ChessGame game = new ChessGame();
+
+        ChessBoard chessBoard = new ChessBoard(9, 6);
+        GamePiecesFactory gamePiecesFactory = new GamePiecesFactory();
+        List<Piece> pieces = new LinkedList<>();
+        pieces.add(gamePiecesFactory.createPiece(Queen.class, Piece.Color.BLACK, chessBoard));
+        pieces.add(gamePiecesFactory.createPiece(Rock.class, Piece.Color.BLACK, chessBoard));
+        pieces.add(gamePiecesFactory.createPiece(Knight.class, Piece.Color.BLACK, chessBoard));
+        pieces.add(gamePiecesFactory.createPiece(Bishop.class, Piece.Color.BLACK, chessBoard));
+        pieces.add(gamePiecesFactory.createPiece(King.class, Piece.Color.BLACK, chessBoard));
+        pieces.add(gamePiecesFactory.createPiece(King.class, Piece.Color.WHITE, chessBoard));
+
+        return game.start(new ParallelBFRecursiveStrategy(chessBoard, pieces));
     }
 
     /**

@@ -17,6 +17,7 @@ Algorithm works like demonstrated below, but **additional chess pieces available
 Available solvers
 ============================
 1. Java single-thread approach - uses recursive backtracking algorithm
+2. Java parallel approach - uses ForkJoinPool for concurrency
 
 Available visualization
 ============================
