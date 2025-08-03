@@ -21,7 +21,9 @@ Available solvers
 Available visualization
 ============================
 * Java implementation has a console output which indicates the number of possible combinations
- and the placement of figures in each found solution
+  and the placement of figures in each found solution
+* Starting from version 1.0 you can launch a JavaFX based UI defined in an FXML layout to browse the solutions.
+  Build the project and run `com.gitlab.saylenty.chessPl.ui.ChessBoardApplication`.
 
 Examples
 ============================
