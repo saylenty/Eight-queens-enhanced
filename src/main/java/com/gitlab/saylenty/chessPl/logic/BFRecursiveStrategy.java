@@ -16,23 +16,30 @@ public class BFRecursiveStrategy implements PlacementStrategy {
 
     private final ChessBoard board;
     private final List<Piece> pieces;
+    private final Consumer<Stream<? extends Piece>> solutionConsumer;
 
-    public BFRecursiveStrategy(ChessBoard board, List<Piece> pieces) {
+    public BFRecursiveStrategy(ChessBoard board, List<Piece> pieces,
+                                Consumer<Stream<? extends Piece>> solutionConsumer) {
         this.board = board;
         this.pieces = pieces;
+        this.solutionConsumer = solutionConsumer;
     }
 
-    @Override
-    public int play() {
-        return recursiveStrategy(0, 0, set -> {
+    public BFRecursiveStrategy(ChessBoard board, List<Piece> pieces) {
+        this(board, pieces, set -> {
             set.forEach(System.out::println);
             System.out.println();
         });
     }
 
-    private int recursiveStrategy(int startIndex, int seed, Consumer<Stream<? extends Piece>> solutionConsumer) {
+    @Override
+    public int play() {
+        return recursiveStrategy(0, 0, solutionConsumer);
+    }
+
+    private int recursiveStrategy(int startIndex, int seed, Consumer<Stream<? extends Piece>> consumer) {
         if (startIndex == pieces.size()) {
-            solutionConsumer.accept(board.getBoardPieces());
+            consumer.accept(board.getBoardPieces());
             return seed + 1;
         }
         var current = pieces.get(startIndex);
@@ -44,7 +51,7 @@ public class BFRecursiveStrategy implements PlacementStrategy {
                 continue;
             }
             board.add(current);
-            seed = recursiveStrategy(startIndex + 1, seed, solutionConsumer);
+            seed = recursiveStrategy(startIndex + 1, seed, consumer);
             board.remove(current);
         }
         return seed;
