@@ -6,7 +6,7 @@ package com.gitlab.saylenty.chessPl.gameItems.pieces;
 
 import com.gitlab.saylenty.chessPl.gameItems.BoardSquare;
 
-public class Knight extends Piece {
+public final class Knight extends Piece {
 
     public Knight(Color color) {
         super("Knight", color);
