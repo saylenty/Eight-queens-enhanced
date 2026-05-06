@@ -9,7 +9,6 @@ import com.gitlab.saylenty.chessPl.gameItems.BoardSquare;
 import com.gitlab.saylenty.chessPl.gameItems.pieces.Piece;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
