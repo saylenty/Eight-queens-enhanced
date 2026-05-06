@@ -4,7 +4,7 @@
  */
 package com.gitlab.saylenty.chessPl.gameItems;
 
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -48,7 +48,7 @@ public final class BoardSquare implements Comparable<BoardSquare> {
     }
 
     @Override
-    public int compareTo(@Nonnull BoardSquare o) {
+    public int compareTo(@NonNull BoardSquare o) {
         return spaceComparator.compare(this, o);
     }
 
