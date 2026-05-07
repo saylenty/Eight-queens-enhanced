@@ -11,7 +11,7 @@ import com.gitlab.saylenty.chessPl.gameItems.pieces.King;
 import com.gitlab.saylenty.chessPl.gameItems.pieces.Knight;
 import com.gitlab.saylenty.chessPl.gameItems.pieces.Piece;
 import com.gitlab.saylenty.chessPl.gameItems.pieces.Queen;
-import com.gitlab.saylenty.chessPl.gameItems.pieces.Rock;
+import com.gitlab.saylenty.chessPl.gameItems.pieces.Rook;
 import com.gitlab.saylenty.chessPl.logic.BFRecursiveStrategy;
 import com.gitlab.saylenty.chessPl.logic.ChessGame;
 import com.google.common.base.Stopwatch;
@@ -52,7 +52,7 @@ public class Main {
         var gamePiecesFactory = new GamePiecesFactory();
         var pieces = new ArrayList<Piece>();
         pieces.add(gamePiecesFactory.createPiece(Queen.class, Piece.Color.BLACK, chessBoard));
-        pieces.add(gamePiecesFactory.createPiece(Rock.class, Piece.Color.BLACK, chessBoard));
+        pieces.add(gamePiecesFactory.createPiece(Rook.class, Piece.Color.BLACK, chessBoard));
         pieces.add(gamePiecesFactory.createPiece(Knight.class, Piece.Color.BLACK, chessBoard));
         pieces.add(gamePiecesFactory.createPiece(Bishop.class, Piece.Color.BLACK, chessBoard));
         pieces.add(gamePiecesFactory.createPiece(King.class, Piece.Color.BLACK, chessBoard));
