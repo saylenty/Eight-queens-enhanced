@@ -6,6 +6,7 @@ package com.gitlab.saylenty.chessPl.gameItems.pieces;
 
 import com.gitlab.saylenty.chessPl.gameItems.ChessBoard;
 import com.gitlab.saylenty.chessPl.gameItems.BoardSquare;
+import com.gitlab.saylenty.chessPl.gameItems.generator.RangeGenerationStrategy;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -18,6 +19,7 @@ public abstract sealed class Piece permits Bishop, King, Knight, Queen, Rock {
 
     private final String name;
     private final Color color;
+    private final RangeGenerationStrategy captureZoneGenerator;
 
     private Iterator<BoardSquare> iterator;
 
@@ -25,14 +27,15 @@ public abstract sealed class Piece permits Bishop, King, Knight, Queen, Rock {
     ChessBoard chessBoard;
     final Set<BoardSquare> captureZone;
 
-    Piece(String name, Color color) {
+    Piece(String name, Color color, RangeGenerationStrategy captureZoneGenerator) {
         this.name = name;
         this.color = color;
+        this.captureZoneGenerator = captureZoneGenerator;
         captureZone = new HashSet<>();
     }
 
-    Piece(String name, Color color, BoardSquare position) {
-        this(name, color);
+    Piece(String name, Color color, RangeGenerationStrategy captureZoneGenerator, BoardSquare position) {
+        this(name, color, captureZoneGenerator);
         this.position = position;
     }
 
@@ -92,113 +95,14 @@ public abstract sealed class Piece permits Bishop, King, Knight, Queen, Rock {
         return captureZone;
     }
 
-    protected abstract void computeCaptureZone();
+    protected void computeCaptureZone() {
+        captureZoneGenerator.generate(position, chessBoard.getHeight(), chessBoard.getWidth())
+                .forEach(captureZone::add);
+    }
 
     @Override
     public String toString() {
         return String.format("%s{name='%s', position={x='%d', y='%d'}, color='%s'}", getClass().getSimpleName(),
                 getName(), position.getX(), position.getY(), color);
-    }
-
-    final void up() {
-        up(-1);
-    }
-
-    final void up(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        while (--y >= 0 && limit-- != 0) {
-            captureZone.add(new BoardSquare(x, y));
-        }
-    }
-
-    final void down() {
-        down(-1);
-    }
-
-    final void down(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        int chessBoardHeight = this.chessBoard.getHeight();
-        while (++y < chessBoardHeight && limit-- != 0) {
-            captureZone.add(new BoardSquare(x, y));
-        }
-    }
-
-    final void left() {
-        left(-1);
-    }
-
-    final void left(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        while (--x >= 0 && limit-- != 0) {
-            captureZone.add(new BoardSquare(x, y));
-        }
-    }
-
-    final void right() {
-        right(-1);
-    }
-
-    final void right(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        int chessBoardWidth = this.chessBoard.getWidth();
-        while (++x < chessBoardWidth && limit-- != 0) {
-            captureZone.add(new BoardSquare(x, y));
-        }
-    }
-
-    final void upLeftDiagonal() {
-        upLeftDiagonal(-1);
-    }
-
-    final void upLeftDiagonal(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        while (--x >= 0 && --y >= 0 && limit-- != 0) {
-            captureZone.add(new BoardSquare(x, y));
-        }
-    }
-
-    final void upRightDiagonal() {
-        upRightDiagonal(-1);
-    }
-
-    final void upRightDiagonal(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        int chessBoardWidth = this.chessBoard.getWidth();
-        while (++x < chessBoardWidth && --y >= 0 && limit-- != 0) {
-            captureZone.add(new BoardSquare(x, y));
-        }
-    }
-
-    final void bottomLeftDiagonal() {
-        bottomLeftDiagonal(-1);
-    }
-
-    final void bottomLeftDiagonal(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        int chessBoardHeight = this.chessBoard.getHeight();
-        while (--x >= 0 && ++y < chessBoardHeight && limit-- != 0) {
-            captureZone.add(new BoardSquare(x, y));
-        }
-    }
-
-    final void downRightDiagonal() {
-        downRightDiagonal(-1);
-    }
-
-    final void downRightDiagonal(int limit) {
-        int x = position.getX();
-        int y = position.getY();
-        int chessBoardWidth = this.chessBoard.getWidth();
-        int chessBoardHeight = this.chessBoard.getHeight();
-        while (++x < chessBoardWidth && ++y < chessBoardHeight && limit-- != 0) {
-            captureZone.add(new BoardSquare(x, y));
-        }
     }
 }
