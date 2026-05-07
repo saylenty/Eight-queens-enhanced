@@ -16,7 +16,7 @@ class GamePiecesFactoryTest {
     private final ChessBoard board = new ChessBoard(5, 5);
 
     static Stream<Class<? extends Piece>> pieceTypes() {
-        return Stream.of(Queen.class, Rock.class, Bishop.class, King.class, Knight.class);
+        return Stream.of(Queen.class, Rook.class, Bishop.class, King.class, Knight.class);
     }
 
     @ParameterizedTest

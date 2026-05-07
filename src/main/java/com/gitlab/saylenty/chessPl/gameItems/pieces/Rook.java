@@ -8,19 +8,19 @@ import com.gitlab.saylenty.chessPl.gameItems.BoardSquare;
 import com.gitlab.saylenty.chessPl.gameItems.generator.BiStraightLineGenerator;
 import com.gitlab.saylenty.chessPl.gameItems.generator.RangeGenerationStrategy;
 
-public final class Rock extends Piece {
+public final class Rook extends Piece {
 
     private static final RangeGenerationStrategy GENERATOR = new BiStraightLineGenerator();
 
-    public Rock(Color color) {
-        super("Rock", color, GENERATOR);
+    public Rook(Color color) {
+        super("Rook", color, GENERATOR);
     }
 
-    public Rock(Color color, BoardSquare position) {
-        super("Rock", color, GENERATOR, position);
+    public Rook(Color color, BoardSquare position) {
+        super("Rook", color, GENERATOR, position);
     }
 
-    public Rock(String name, Color color, BoardSquare position) {
+    public Rook(String name, Color color, BoardSquare position) {
         super(name, color, GENERATOR, position);
     }
 }

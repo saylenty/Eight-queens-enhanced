@@ -6,23 +6,23 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RockTest {
+class RookTest {
 
     @Test
     void captureZoneContainsOwnPosition() {
         var board = new ChessBoard(5, 5);
         var position = new BoardSquare(2, 2);
-        var rock = new Rock(Piece.Color.BLACK, position);
-        rock.setChessBoard(board);
-        assertThat(rock.getCaptureZone()).contains(position);
+        var rook = new Rook(Piece.Color.BLACK, position);
+        rook.setChessBoard(board);
+        assertThat(rook.getCaptureZone()).contains(position);
     }
 
     @Test
     void captureZoneCoversSameRowAndColumnOnly() {
         var board = new ChessBoard(5, 5);
-        var rock = new Rock(Piece.Color.BLACK, new BoardSquare(2, 2));
-        rock.setChessBoard(board);
-        assertThat(rock.getCaptureZone()).containsExactlyInAnyOrder(
+        var rook = new Rook(Piece.Color.BLACK, new BoardSquare(2, 2));
+        rook.setChessBoard(board);
+        assertThat(rook.getCaptureZone()).containsExactlyInAnyOrder(
             new BoardSquare(2, 2),
             new BoardSquare(2, 1), new BoardSquare(2, 0),
             new BoardSquare(2, 3), new BoardSquare(2, 4),

@@ -11,7 +11,7 @@ import com.gitlab.saylenty.chessPl.gameItems.generator.RangeGenerationStrategy;
 import java.util.*;
 import java.util.stream.Stream;
 
-public abstract sealed class Piece permits Bishop, King, Knight, Queen, Rock {
+public abstract sealed class Piece permits Bishop, King, Knight, Queen, Rook {
 
     public enum Color {
         WHITE, BLACK
